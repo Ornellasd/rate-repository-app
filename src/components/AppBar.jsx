@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import Constants from 'expo-constants';
 
 import Text from './Text';
@@ -17,7 +17,9 @@ const styles = StyleSheet.create({
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <Text color="title" fontWeight="bold">Repositories</Text>
+      <Pressable>
+        <Text color="title" fontWeight="bold">Repositories</Text>
+      </Pressable>
     </View>
   );
 }
