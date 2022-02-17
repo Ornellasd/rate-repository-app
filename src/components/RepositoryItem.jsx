@@ -39,39 +39,50 @@ const styles = StyleSheet.create({
   }
 });
 
-const RepositoryItem = ({ item }) => (
-  <View style={styles.itemContainer}>
-    <View style={styles.repositoryInfo}>
-      <Image 
-        source = {{uri: item.ownerAvatarUrl}}
-        style = {styles.avatar}
-      />
-      <View style={styles.repositoryText}>
-        <Text fontWeight="bold" fontSize="subheading">{item.fullName}</Text>
-        <Text color="textSecondary">{item.description}</Text>
-        <Text style={styles.respositoryLanguage}>{item.language}</Text>
-      </View>
-    </View>
+const RepositoryItem = ({ item }) => {
+  const formatNumber = (num) => {
+    if (num >= 1000) {
+      return  Math.round((num / 1000) * 10) / 10 + 'k';
+    } else {
+      return num;
+    }
+  };
 
-    <View style={styles.repositoryMetrics}>
-      <View style={styles.repositoryMetricData}>
-        <Text fontWeight="bold">{item.stargazersCount}</Text>
-        <Text color="textSecondary">Stars</Text>
+  return (
+    <View style={styles.itemContainer}>
+      <View style={styles.repositoryInfo}>
+        <Image 
+          source = {{uri: item.ownerAvatarUrl}}
+          style = {styles.avatar}
+        />
+        <View style={styles.repositoryText}>
+          <Text fontWeight="bold" fontSize="subheading">{item.fullName}</Text>
+          <Text color="textSecondary">{item.description}</Text>
+          <Text style={styles.respositoryLanguage}>{item.language}</Text>
+        </View>
       </View>
-      <View style={styles.repositoryMetricData}>
-        <Text fontWeight="bold">{item.forksCount}</Text>
-        <Text color="textSecondary">Forks</Text>
-      </View>
-      <View style={styles.repositoryMetricData}>
-        <Text fontWeight="bold">{item.reviewCount}</Text>
-        <Text color="textSecondary">Reviews</Text>
-      </View>
-      <View style={styles.repositoryMetricData}>
-        <Text fontWeight="bold">{item.ratingAverage}</Text>
-        <Text color="textSecondary">Rating</Text>
+
+      <View style={styles.repositoryMetrics}>
+        <View style={styles.repositoryMetricData}>
+          <Text fontWeight="bold">{formatNumber(item.stargazersCount)}</Text>
+          <Text color="textSecondary">Stars</Text>
+        </View>
+        <View style={styles.repositoryMetricData}>
+          <Text fontWeight="bold">{formatNumber(item.forksCount)}</Text>
+          <Text color="textSecondary">Forks</Text>
+        </View>
+        <View style={styles.repositoryMetricData}>
+          <Text fontWeight="bold">{formatNumber(item.reviewCount)}</Text>
+          <Text color="textSecondary">Reviews</Text>
+        </View>
+        <View style={styles.repositoryMetricData}>
+          <Text fontWeight="bold">{formatNumber(item.ratingAverage)}</Text>
+          <Text color="textSecondary">Rating</Text>
+        </View>
       </View>
     </View>
-  </View>
-);
+  );
+
+};
 
 export default RepositoryItem;
