@@ -13,37 +13,43 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   repositoryText: {
-    marginLeft: 20
+    marginLeft: 20,
+    flex: 1,
   },
   respositoryLanguage: {
+    alignSelf: 'flex-start',
     backgroundColor: '#0366d6',
-    color: '#fff'
+    color: '#fff',
+    borderRadius: 4,
+    marginTop: 5,
+    padding: 5,
   },
   avatar: {
-    width: 75,
-    height: 75,
+    width: 65,
+    height: 65,
+    borderRadius: 8,
   },
   repositoryMetrics: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    marginTop: 20,
   },
   repositoryMetricData: {
     alignItems: 'center'
   }
-
 });
 
 const RepositoryItem = ({ item }) => (
   <View style={styles.itemContainer}>
     <View style={styles.repositoryInfo}>
-      {/* <Image 
+      <Image 
         source = {{uri: item.ownerAvatarUrl}}
         style = {styles.avatar}
-      /> */}
+      />
       <View style={styles.repositoryText}>
         <Text fontWeight="bold" fontSize="subheading">{item.fullName}</Text>
         <Text color="textSecondary">{item.description}</Text>
-        {/* <Text style={styles.respositoryLanguage}>{item.language}</Text> */}
+        <Text style={styles.respositoryLanguage}>{item.language}</Text>
       </View>
     </View>
 
