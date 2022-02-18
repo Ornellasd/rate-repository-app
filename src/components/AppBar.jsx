@@ -14,11 +14,15 @@ const styles = StyleSheet.create({
   },
   scrollTainer: {
     marginHorizontal: 20,
+  },
+  tab: {
+    marginLeft: 10,
+    padding: 10,
   }
 });
 
 const AppBarTab = ({ name, link }) => (
-  <Link to={link} style={{ marginLeft: 10 }}>
+  <Link to={link} style={styles.tab}>
     <Text color="title" fontWeight="bold" fontSize="subheading">{name}</Text>
   </Link>
 );
