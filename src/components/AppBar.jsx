@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 });
 
 const AppBarTab = ({ name, link }) => (
-  <Link to={link} style={{ paddingLeft: 10 }}>
+  <Link to={link} style={{ marginLeft: 10 }}>
     <Text color="title" fontWeight="bold" fontSize="subheading">{name}</Text>
   </Link>
 );
