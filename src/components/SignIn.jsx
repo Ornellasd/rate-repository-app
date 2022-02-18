@@ -1,11 +1,12 @@
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { Formik, useField } from 'formik';
 
+import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 import theme from '../theme';
 
-const borderRadius = 3;
-const height = 50;
+// const borderRadius = 3;
+// const height = 50;
 
 const styles = StyleSheet.create({
   container: {
@@ -14,16 +15,9 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'space-around'
   },
-  inputField : {
-    paddingLeft: 10,
-    borderColor: '#8f8f8f',
-    borderWidth: 1,
-    borderRadius,
-    height,
-  },
   button: {
-    height,
-    borderRadius,
+    height: theme.formFields.height,
+    borderRadius: theme.formFields.borderRadius,
     backgroundColor: theme.colors.buttonPrimary,
     alignItems: 'center',
     justifyContent: 'center'
@@ -36,30 +30,14 @@ const initialValues = {
 };
 
 const SignInForm = ({ onSubmit }) => {
-  const [usernameField, usernameMeta, usernameHelpers] = useField('username');
-  const [passwordField, passwordMeta, passwordHelpers] = useField('password');
-
   return (
-    <Formik initialValues={initialValues}>
-      <View style={styles.container}>
-        <TextInput 
-          style={styles.inputField} 
-          placeholder="Username"
-          value={usernameField.value}
-          onChangeText={text => usernameHelpers.setValue(text)}
-        />
-        <TextInput 
-          style={styles.inputField} 
-          placeholder="Password"
-          value={passwordField.value}
-          onChangeText={text => passwordHelpers.setValue(text)}
-          secureTextEntry 
-        />
-        <Pressable style={styles.button} onPress={onSubmit}>
-          <Text color="title" fontWeight="bold" fontSize="subheading">Sign In</Text>
-        </Pressable>
-      </View>
-    </Formik>
+    <View style={styles.container}>
+      <FormikTextInput name="username" placeholder="Username" />
+      <FormikTextInput name="password" placeholder="Password" />
+      <Pressable style={styles.button} onPress={onSubmit}>
+        <Text color="title" fontWeight="bold" fontSize="subheading">Sign In</Text>
+      </Pressable>
+    </View>
   )
 };
 
