@@ -6,9 +6,6 @@ import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 import theme from '../theme';
 
-// const borderRadius = 3;
-// const height = 50;
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.title,

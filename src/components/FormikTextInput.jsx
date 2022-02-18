@@ -9,7 +9,7 @@ console.log(theme);
 
 const styles = StyleSheet.create({
   errorText: {
-    marginTop: 5,
+    height: 20,
     color: theme.colors.errorColor,
   },
 });

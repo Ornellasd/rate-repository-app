@@ -9,9 +9,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: theme.formFields.borderRadius,
     height: theme.formFields.height,
+    marginBottom: 28,
   },
   error: {
     borderColor: theme.colors.errorColor,
+    marginBottom: 0
   },
 });
 
