@@ -10,7 +10,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.title,
     height: 250,
-    padding: 10,
+    // padding: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     justifyContent: 'space-around'
   },
   button: {
