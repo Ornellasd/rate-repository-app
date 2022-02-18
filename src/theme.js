@@ -5,6 +5,7 @@ const theme = {
     primary: '#0366d6',
     title: '#fff',
     buttonPrimary: '#0275d8',
+    errorColor: '#d73a4a',
   },
   fontSizes: {
     body: 14,
@@ -19,7 +20,7 @@ const theme = {
   },
   formFields: {
     borderRadius: 3,
-    height: 50
+    height: 50,
   }
 };
 

@@ -10,11 +10,15 @@ const styles = StyleSheet.create({
     borderRadius: theme.formFields.borderRadius,
     height: theme.formFields.height,
   },
+  error: {
+    borderColor: theme.colors.errorColor,
+  },
 });
 
 const TextInput = ({ style, error, ...props }) => {
   const textInputStyle = [
     styles.inputField,
+    error && styles.error,
   ];
 
   return <NativeTextInput style={textInputStyle} {...props} />;
