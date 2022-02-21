@@ -8,29 +8,20 @@ const useRepositories = () => {
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
 
-  const [repositoriesTEST, setRepositoriesTEST] = useState();
+  const result = useQuery(GET_REPOSITORIES, {
+    fetchPolicy: 'cache-and-network',
+  });
 
-  const result = useQuery(GET_REPOSITORIES);
-
-  useEffect(() => {
-    if(result.data) {
-      setRepositoriesTEST(result.data.repositories);
-    }
-  }, [result]);
-
-  const fetchRepositories = async () => {
+  const fetchRepositories = () => {
     setLoading(true);
 
-    const response = await fetch('http://192.168.178.150:5000/api/repositories');
-    const json = await response.json();
+    if(result.data) {
+      setRepositories(result.data.repositories);
+      setLoading(false);
+    }
+  };
 
-    setLoading(false);
-    setRepositories(json);
-  }
-
-  useEffect(() => {
-    fetchRepositories();
-  }, []);
+  useEffect(fetchRepositories, [result]);
 
   return { repositories, loading, refetch: fetchRepositories };
 };
