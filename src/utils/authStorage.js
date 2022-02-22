@@ -14,17 +14,14 @@ class AuthStorage {
   }
 
   async setAccessToken(accessToken) {
-    const currentToken = await this.getAccessToken();
-    console.log(currentToken);
-
     await AsyncStorage.setItem(
       `${this.namespace}:token`,
       JSON.stringify(accessToken)
     );
   }
 
-  removeAccessToken() {
-
+  async removeAccessToken() {
+    await AsyncStorage.removeItem(`${this.namespace}:token`);
   }
 }
 
