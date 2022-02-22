@@ -2,11 +2,12 @@ import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { Formik, useField } from 'formik';
 import * as yup from 'yup';
 
-import FormikTextInput from './FormikTextInput';
+import useSignIn from '../hooks/useSignIn';
+import AuthStorage from '../utils/authStorage';
 
+import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 import theme from '../theme';
-import useSignIn from '../hooks/useSignIn';
 
 const styles = StyleSheet.create({
   container: {
@@ -59,20 +60,18 @@ const validationSchema = yup.object().shape({
 
 const SignIn = () => {
   const [signIn] = useSignIn();
+  const authStorage = new AuthStorage();
 
   const onSubmit = async (values) => {
     const username = values.username;
     const password = values.password;
 
-    // await signIn({ username, password });
-
     try {
       const { data } = await signIn({ username, password });
-      console.log(data);
+      authStorage.setAccessToken(data.authenticate.accessToken);
     } catch (e) {
       console.log(e);
     }
-    // console.log(`Your username is '${username}' and your password is '${password}'.`)
   };
 
   return (
