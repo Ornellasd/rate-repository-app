@@ -1,6 +1,8 @@
-import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { useNavigate } from 'react-router-native';
 import { Formik, useField } from 'formik';
 import * as yup from 'yup';
+
 
 import useSignIn from '../hooks/useSignIn';
 import AuthStorage from '../utils/authStorage';
@@ -60,7 +62,7 @@ const validationSchema = yup.object().shape({
 
 const SignIn = () => {
   const [signIn] = useSignIn();
-  const authStorage = new AuthStorage();
+  const navigate = useNavigate();
 
   const onSubmit = async (values) => {
     const username = values.username;
@@ -68,8 +70,7 @@ const SignIn = () => {
 
     try {
       await signIn({ username, password });
-      // const { data } = await signIn({ username, password });
-      // authStorage.setAccessToken(data.authenticate.accessToken);
+      navigate('/');
     } catch (e) {
       console.log(e);
     }
