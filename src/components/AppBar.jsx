@@ -1,11 +1,13 @@
 import { View, StyleSheet, ScrollView, Pressable, Button } from 'react-native';
 import { Link } from 'react-router-native';
-import { useQuery } from '@apollo/client';
+import { useApolloClient, useQuery } from '@apollo/client';
 import Constants from 'expo-constants';
 
 import { GET_CURRENT_USER } from '../graphql/queries';
+import AuthStorageContext from '../contexts/AuthStorageContext';
 
 import Text from './Text';
+import { useContext } from 'react';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,20 +33,25 @@ const AppBarTab = ({ name, link="", onPress }) => (
 );
 
 const AppBar = () => {
-  const isCurrentUser = useQuery(GET_CURRENT_USER);
+  const apolloClient = useApolloClient();
+  const authStorage = useContext(AuthStorageContext);
+  const currentUser = useQuery(GET_CURRENT_USER);
 
-  const signOut = () => {
-    console.log('derp');
+  const signOut = async () => {
+    await authStorage.removeAccessToken();
+    apolloClient.resetStore();
   };
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollTainer} horizontal>
         <AppBarTab name="Repositories" link="/"  />
-        { isCurrentUser.data
+
+        { currentUser.data && currentUser.data.me
           ? <AppBarTab name="Sign Out" onPress={signOut}/>
           : <AppBarTab name="Sign In" link="/signin" />
         }
+
       </ScrollView>
     </View>
   );
