@@ -1,6 +1,9 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Pressable, Button } from 'react-native';
 import { Link } from 'react-router-native';
+import { useQuery } from '@apollo/client';
 import Constants from 'expo-constants';
+
+import { GET_CURRENT_USER } from '../graphql/queries';
 
 import Text from './Text';
 
@@ -21,18 +24,27 @@ const styles = StyleSheet.create({
   }
 });
 
-const AppBarTab = ({ name, link }) => (
+const AppBarTab = ({ name, link="", onPress }) => (
   <Link to={link} style={styles.tab}>
-    <Text color="title" fontWeight="bold" fontSize="subheading">{name}</Text>
+    <Text color="title" fontWeight="bold" fontSize="subheading" onPress={onPress}>{name}</Text>
   </Link>
 );
 
 const AppBar = () => {
+  const isCurrentUser = useQuery(GET_CURRENT_USER);
+
+  const signOut = () => {
+    console.log('derp');
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollTainer} horizontal>
         <AppBarTab name="Repositories" link="/"  />
-        <AppBarTab name="Sign In" link="/signin" />
+        { isCurrentUser.data
+          ? <AppBarTab name="Sign Out" onPress={signOut}/>
+          : <AppBarTab name="Sign In" link="/signin" />
+        }
       </ScrollView>
     </View>
   );
