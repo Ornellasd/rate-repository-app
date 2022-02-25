@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#fff',
     padding: 10,
-    marginBottom: 5,
+    // marginBottom: 5,
   },
   repositoryInfo: {
     flexDirection: 'row',
