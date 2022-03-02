@@ -1,37 +1,7 @@
-import { Text, View } from 'react-native';
 import { render } from '@testing-library/react-native';
 
 import { RepositoryListContainer } from '../components/RepositoryList';
-
-
-
-// const Greeting = ({ name }) => {
-//   return (
-//     <View>
-//       <Text>Hello {name}!</Text>
-//     </View>
-//   );
-// };
-
-// describe('Greeting', () => {
-//   it('renders a greeting message based on the name prop', () => {
-//     const { debug, getByText } = render(<Greeting name="Kalle" />);
-
-//     debug();
-
-//     expect(getByText('Hello Kalle!')).toBeDefined();
-//   });
-// });
-
-// const RepositoryItem = ({ item }) => {
-//   // ...
-
-//   return (
-//     <View testID="repositoryItem" {/* ... */}>
-//       {}
-//     </View>
-//   )
-//};
+import { formatNumber } from '../components/RepositoryMetrics';
 
 describe('RepositoryList', () => {
   describe('RepositoryListContainer', () => {
@@ -79,22 +49,28 @@ describe('RepositoryList', () => {
         ],
       };
 
-      // const { debug, getByText } = render(<Greeting name="Kalle" />);
-      const { debug, getAllByTestId } = render(<RepositoryListContainer repositories={repositories} />);
-      const repositoryItemInfo = getAllByTestId('repositoryInfo');
-      const repositoryItemMetrics = getAllByTestId('repositoryMetrics')
+      const { getAllByTestId } = render(<RepositoryListContainer repositories={repositories} />);
+      const repositoryItemInfo = getAllByTestId('repoInfo');
+      const repositoryItemMetrics = getAllByTestId('repoMetrics');
 
       const [firstRepoInfo, secondRepoInfo] = repositoryItemInfo;
+      const [firstRepoMetrics, secondRepoMetrics] = repositoryItemMetrics;
 
+      expect(firstRepoInfo).toHaveTextContent(repositories.edges[0].node.fullName);
+      expect(firstRepoInfo).toHaveTextContent(repositories.edges[0].node.description);
+      expect(firstRepoInfo).toHaveTextContent(repositories.edges[0].node.language);
+      expect(firstRepoMetrics).toHaveTextContent(formatNumber(repositories.edges[0].node.forksCount));
+      expect(firstRepoMetrics).toHaveTextContent(formatNumber(repositories.edges[0].node.stargazersCount));
+      expect(firstRepoMetrics).toHaveTextContent(formatNumber(repositories.edges[0].node.ratingAverage));
+      expect(firstRepoMetrics).toHaveTextContent(formatNumber(repositories.edges[0].node.reviewCount));
 
-
-      console.log(repositoryItems);
-      // expect(firstRepositoryItem).toHaveTextContent(repositories.edges[0].node.fullName);
-      // console.log(repositories.edges[0].node.fullName);
-      // debug();
-
-      // expect(firstRepositoryItem).toHaveTextContent(repositories.edges[0].node.fullName);
-
+      expect(secondRepoInfo).toHaveTextContent(repositories.edges[1].node.fullName);
+      expect(secondRepoInfo).toHaveTextContent(repositories.edges[1].node.description);
+      expect(secondRepoInfo).toHaveTextContent(repositories.edges[1].node.language);
+      expect(secondRepoMetrics).toHaveTextContent(formatNumber(repositories.edges[1].node.forksCount));
+      expect(secondRepoMetrics).toHaveTextContent(formatNumber(repositories.edges[1].node.stargazersCount));
+      expect(secondRepoMetrics).toHaveTextContent(formatNumber(repositories.edges[1].node.ratingAverage));
+      expect(secondRepoMetrics).toHaveTextContent(formatNumber(repositories.edges[1].node.reviewCount));
 
     });
   });

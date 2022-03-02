@@ -10,26 +10,6 @@ const styles = StyleSheet.create({
     padding: 10,
     // marginBottom: 5,
   },
-  repositoryInfo: {
-    flexDirection: 'row',
-  },
-  repositoryText: {
-    marginLeft: 20,
-    flex: 1,
-  },
-  respositoryLanguage: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#0366d6',
-    color: '#fff',
-    borderRadius: 4,
-    marginTop: 5,
-    padding: 5,
-  },
-  avatar: {
-    width: 65,
-    height: 65,
-    borderRadius: 8,
-  },
 });
 
 const RepositoryItem = ({ item }) => {
