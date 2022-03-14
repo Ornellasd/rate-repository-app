@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-native';
 import { useQuery } from '@apollo/client';
 import * as Linking from 'expo-linking';
 
-import { GET_REPOSITORY } from '../graphql/queries';
+import { GET_REPOSITORY, GET_REVIEWS } from '../graphql/queries';
 
 import RepositoryMetrics from './RepositoryMetrics';
 import RepositoryInfo from './RepositoryInfo';
@@ -37,6 +37,21 @@ const RepositoryItem = ({ item }) => {
   );
 };
 
+const Reviews = ({ id }) => {
+  const { loading, error, data } = useQuery(GET_REVIEWS, {
+    variables: { id },
+  });
+
+  if (loading) return null;
+  if (error) console.log(`ERROR!: ${error}`);
+
+  console.log(data);
+
+  return (
+    <Text>REVIEWS</Text>
+  )
+};
+
 export const SingleRepository = () => {
   const { id } = useParams();
 
@@ -62,6 +77,7 @@ export const SingleRepository = () => {
           Open in GitHub
         </Text>
       </Pressable>
+      <Reviews id={id} />
     </View>
   )
 };
