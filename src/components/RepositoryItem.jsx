@@ -1,8 +1,11 @@
 import { View, StyleSheet, Text } from 'react-native';
+import { Link, useParams } from 'react-router-native';
+import { useQuery } from '@apollo/client';
+
+import { GET_REPOSITORY } from '../graphql/queries';
 
 import RepositoryMetrics from './RepositoryMetrics';
 import RepositoryInfo from './RepositoryInfo';
-import { Link, useParams } from 'react-router-native';
 
 const styles = StyleSheet.create({
   itemContainer: {
@@ -12,24 +15,6 @@ const styles = StyleSheet.create({
     // marginBottom: 5,
   },
 });
-
-// export const RepoTest = ({ id }) => (
-//   <>
-//     <Text>REPO DERP</Text>
-//   </>
-// );
-
-export const RepoExpanded = () => {
-  const { id } = useParams();
-
-  console.log(id); 
-
-  return (
-    <>
-      <Text>Repo: {id}</Text>
-    </>
-  )
-};
 
 const RepositoryItem = ({ item }) => {
   return (
@@ -41,6 +26,25 @@ const RepositoryItem = ({ item }) => {
     </Link>
   
   );
+};
+
+export const SingleRepository = () => {
+  const { id } = useParams();
+
+  const { loading, error, data } = useQuery(GET_REPOSITORY, {
+    variables: { id },
+  });
+
+  if (loading) return null;
+  if (error) console.log(`ERROR!: ${error}`);
+
+  console.log(data);
+
+  return (
+    <>
+      <Text>Repo: {id}</Text>
+    </>
+  )
 };
 
 export default RepositoryItem;
