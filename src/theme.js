@@ -27,7 +27,7 @@ const theme = {
   formFields: {
     borderRadius: 3,
     height: 50,
-  }
+  },
 };
 
 export default theme;

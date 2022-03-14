@@ -1,6 +1,7 @@
 import { View, StyleSheet, Pressable } from 'react-native';
 import { Link, useParams } from 'react-router-native';
 import { useQuery } from '@apollo/client';
+import * as Linking from 'expo-linking';
 
 import { GET_REPOSITORY } from '../graphql/queries';
 
@@ -15,9 +16,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#fff',
     padding: 10,
-    // marginBottom: 5,
   },
-  // REFACTOR BUTTON STYLES ELSWEWHERE(POSSIBLY itemContainer as well!)
   button: {
     height: theme.formFields.height,
     borderRadius: theme.formFields.borderRadius,
@@ -35,7 +34,6 @@ const RepositoryItem = ({ item }) => {
         <RepositoryMetrics item={item} />
       </View>
     </Link>
-  
   );
 };
 
@@ -49,13 +47,12 @@ export const SingleRepository = () => {
   if (loading) return null;
   if (error) console.log(`ERROR!: ${error}`);
 
-  console.log(data.repository);
-
   return (
     <View style={styles.itemContainer}>
       <RepositoryItem item={data.repository} />
       <Pressable
-        style={styles.button}      
+        style={styles.button}
+        onPress={() => Linking.openURL(data.repository.url)}     
       >
         <Text
           color="title"
@@ -63,7 +60,7 @@ export const SingleRepository = () => {
           fontSize="subheading"
         >
           Open in GitHub
-          </Text>
+        </Text>
       </Pressable>
     </View>
   )
