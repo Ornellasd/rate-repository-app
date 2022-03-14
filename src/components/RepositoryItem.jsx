@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import { Link, useParams } from 'react-router-native';
 import { useQuery } from '@apollo/client';
 
@@ -6,6 +6,9 @@ import { GET_REPOSITORY } from '../graphql/queries';
 
 import RepositoryMetrics from './RepositoryMetrics';
 import RepositoryInfo from './RepositoryInfo';
+import Text from './Text';
+
+import theme from '../theme';
 
 const styles = StyleSheet.create({
   itemContainer: {
@@ -14,6 +17,14 @@ const styles = StyleSheet.create({
     padding: 10,
     // marginBottom: 5,
   },
+  // REFACTOR BUTTON STYLES ELSWEWHERE(POSSIBLY itemContainer as well!)
+  button: {
+    height: theme.formFields.height,
+    borderRadius: theme.formFields.borderRadius,
+    backgroundColor: theme.colors.buttonPrimary,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 });
 
 const RepositoryItem = ({ item }) => {
@@ -38,12 +49,23 @@ export const SingleRepository = () => {
   if (loading) return null;
   if (error) console.log(`ERROR!: ${error}`);
 
-  console.log(data);
+  console.log(data.repository);
 
   return (
-    <>
-      <Text>Repo: {id}</Text>
-    </>
+    <View style={styles.itemContainer}>
+      <RepositoryItem item={data.repository} />
+      <Pressable
+        style={styles.button}      
+      >
+        <Text
+          color="title"
+          fontWeight="bold"
+          fontSize="subheading"
+        >
+          Open in GitHub
+          </Text>
+      </Pressable>
+    </View>
   )
 };
 

@@ -37,6 +37,13 @@ export const GET_REPOSITORY = gql`
       id
       fullName
       url
+      description
+      language
+      stargazersCount
+      forksCount
+      reviewCount
+      ratingAverage
+      ownerAvatarUrl
     }
   }
 `;
