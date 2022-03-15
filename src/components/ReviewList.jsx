@@ -42,6 +42,9 @@ const styles = StyleSheet.create({
   ratingsInfo: {
     flex: 1,
     marginLeft: 10,
+  },
+  flatlistContainer: {
+    paddingBottom: 350
   }
 });
 
@@ -84,7 +87,8 @@ const ReviewList = ({ id }) => {
     <FlatList
       data={reviews}
       ItemSeparatorComponent={ItemSeparator}
-      renderItem={renderItem} 
+      renderItem={renderItem}
+      contentContainerStyle={styles.flatlistContainer}
     />
   );
 };
