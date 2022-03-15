@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#fff',
     padding: 10,
+    /////// new styles/////
+    flexDirection: 'row',
   },
   //REFACTOR BUTTON STYLES TO THEME FILE
   button: {
@@ -24,23 +26,42 @@ const styles = StyleSheet.create({
   separator: {
     height: 8,
   },
+  ratingBorder: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderRadius: 100,
+    borderColor: theme.colors.primary,
+    width: 60,
+    height: 60,
+  },
+  rating: {
+    color: theme.colors.primary,
+  },
+  ratingsInfo: {
+    flex: 1,
+    marginLeft: 10,
+  }
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-{/* <Text color="title" fontWeight="bold" fontSize="subheading">Sign In</Text> */}
-
-
 const ReviewItem = ({ item }) => {
-  const { createdAt, text, user } = item.node;
+  const { createdAt, text, user, rating } = item.node;
   const date = new Date(createdAt);
   const formattedDate = date.toLocaleDateString('en-US');
 
   return (
     <View style={styles.itemContainer}>
-      <Text fontWeight="bold" fontSize="subheading">{user.username}</Text>
-      <Text color="textSecondary">{formattedDate}</Text>
-      <Text>{text}</Text>
+      <View style={styles.ratingBorder}>
+        <Text fontWeight="bold" fontSize="subheading" style={styles.rating}>{rating}</Text>
+      </View>
+      <View style={styles.ratingsInfo}>
+        <Text fontWeight="bold" fontSize="subheading">{user.username}</Text>
+        <Text color="textSecondary">{formattedDate}</Text>
+        <Text>{text}</Text>
+      </View>
     </View>
   )
 };
@@ -50,7 +71,6 @@ const renderItem = ({ item }) => (
 );
 
 const ReviewList = ({ id }) => {
-
   const { loading, error, data } = useQuery(GET_REVIEWS, {
     variables: { id },
   });
@@ -58,14 +78,9 @@ const ReviewList = ({ id }) => {
   if (loading) return null;
   if (error) console.log(`ERROR!: ${error}`);
 
-  // data.repository.reviews.edges.forEach(review => {
-  //   console.log(review.node.rating);
-  // });
-
   const reviews = data.repository.reviews.edges;
 
   return (
-    // <Text>REVIEWS</Text>
     <FlatList
       data={reviews}
       ItemSeparatorComponent={ItemSeparator}

@@ -1,6 +1,8 @@
 import { View, StyleSheet, Image } from 'react-native';
 import Text from './Text';
 
+import theme from '../theme';
+
 const styles = StyleSheet.create({
   repositoryInfo: {
     flexDirection: 'row',
@@ -14,7 +16,7 @@ const styles = StyleSheet.create({
   },
   respositoryLanguage: {
     alignSelf: 'flex-start',
-    backgroundColor: '#0366d6',
+    backgroundColor: theme.colors.primary,
     color: '#fff',
     borderRadius: 4,
     padding: 5,
