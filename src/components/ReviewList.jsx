@@ -28,12 +28,20 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
+{/* <Text color="title" fontWeight="bold" fontSize="subheading">Sign In</Text> */}
+
+
 const ReviewItem = ({ item }) => {
-  // console.log(item);
-  console.log(item);
+  const { createdAt, text, user } = item.node;
+  const date = new Date(createdAt);
+  const formattedDate = date.toLocaleDateString('en-US');
 
   return (
-    <Text>Text: {item.node.text}</Text>
+    <View style={styles.itemContainer}>
+      <Text fontWeight="bold" fontSize="subheading">{user.username}</Text>
+      <Text color="textSecondary">{formattedDate}</Text>
+      <Text>{text}</Text>
+    </View>
   )
 };
 
@@ -42,6 +50,7 @@ const renderItem = ({ item }) => (
 );
 
 const ReviewList = ({ id }) => {
+
   const { loading, error, data } = useQuery(GET_REVIEWS, {
     variables: { id },
   });

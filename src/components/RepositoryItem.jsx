@@ -50,7 +50,8 @@ export const SingleRepository = () => {
   if (error) console.log(`ERROR!: ${error}`);
 
   return (
-    <View style={styles.itemContainer}>
+    // <View style={styles.itemContainer}>
+    <View>
       <RepositoryItem item={data.repository} />
       <Pressable
         style={styles.button}
@@ -64,7 +65,6 @@ export const SingleRepository = () => {
           Open in GitHub
         </Text>
       </Pressable>
-      {/* <ReviewsContainer id={id} /> */}
       <ReviewList id={id} />
     </View>
   )
