@@ -10,6 +10,7 @@ import RepositoryInfo from './RepositoryInfo';
 import Text from './Text';
 
 import theme from '../theme';
+import ReviewList from './ReviewList';
 
 const styles = StyleSheet.create({
   itemContainer: {
@@ -25,9 +26,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  separator: {
-    height: 8,
-  },
 });
 
 const RepositoryItem = ({ item }) => {
@@ -40,48 +38,6 @@ const RepositoryItem = ({ item }) => {
     </Link>
   );
 };
-
-///// REVIEWS COMPONENT ///////////
-
-const ItemSeparator = () => <View style={styles.separator} />;
-
-const ReviewItem = ({ item }) => {
-  // console.log(item);
-  console.log(item);
-
-  return (
-    <Text>Text: {item.node.text}</Text>
-  )
-};
-
-const renderItem = ({ item }) => (
-  <ReviewItem item={item} />
-);
-const ReviewsContainer = ({ id }) => {
-  const { loading, error, data } = useQuery(GET_REVIEWS, {
-    variables: { id },
-  });
-
-  if (loading) return null;
-  if (error) console.log(`ERROR!: ${error}`);
-
-  // data.repository.reviews.edges.forEach(review => {
-  //   console.log(review.node.rating);
-  // });
-
-  const reviews = data.repository.reviews.edges;
-
-  return (
-    // <Text>REVIEWS</Text>
-    <FlatList
-      data={reviews}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={renderItem} 
-    />
-  );
-};
-
-///// END REVIEWS COMPONENT ////////////
 
 export const SingleRepository = () => {
   const { id } = useParams();
@@ -108,7 +64,8 @@ export const SingleRepository = () => {
           Open in GitHub
         </Text>
       </Pressable>
-      <ReviewsContainer id={id} />
+      {/* <ReviewsContainer id={id} /> */}
+      <ReviewList id={id} />
     </View>
   )
 };
