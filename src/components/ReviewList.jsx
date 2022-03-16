@@ -89,6 +89,7 @@ const ReviewList = ({ id }) => {
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
       contentContainerStyle={styles.flatlistContainer}
+      keyExtractor={(item) => item.node.id}
     />
   );
 };
