@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 
 import { GET_REVIEWS } from '../graphql/queries';
 
+import RepositoryItem from './RepositoryItem';
 import Text from './Text';
 
 import theme from '../theme';
@@ -14,6 +15,7 @@ const styles = StyleSheet.create({
     padding: 10,
     /////// new styles/////
     flexDirection: 'row',
+    // marginTop: 8,
   },
   //REFACTOR BUTTON STYLES TO THEME FILE
   button: {
@@ -73,7 +75,7 @@ const renderItem = ({ item }) => (
   <ReviewItem item={item} />
 );
 
-const ReviewList = ({ id }) => {
+const ReviewList = ({ id, repository }) => {
   const { loading, error, data } = useQuery(GET_REVIEWS, {
     variables: { id },
   });
@@ -86,10 +88,11 @@ const ReviewList = ({ id }) => {
   return (
     <FlatList
       data={reviews}
-      ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
       contentContainerStyle={styles.flatlistContainer}
       keyExtractor={(item) => item.node.id}
+      ListHeaderComponent={() => <RepositoryItem item={repository} showGit={true} />}
+      ItemSeparatorComponent={ItemSeparator}
     />
   );
 };
