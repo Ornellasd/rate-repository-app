@@ -14,24 +14,25 @@ import ReviewList from './ReviewList';
 
 const styles = StyleSheet.create({
   itemContainer: {
-    display: 'flex',
     backgroundColor: '#fff',
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
   },
-  //REFACTOR BUTTON STYLES TO THEME FILE
   button: {
     height: theme.formFields.height,
     borderRadius: theme.formFields.borderRadius,
     backgroundColor: theme.colors.buttonPrimary,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    //// new styles /////
+    marginTop: 10,
   },
 });
 
 const RepositoryItem = ({ item }) => {
   return (
     <Link to={`/repository/${item.id}`}>
-      <View style={styles.itemContainer}>
+      <View>
         <RepositoryInfo item={item} />
         <RepositoryMetrics item={item} />
       </View>
@@ -50,21 +51,22 @@ export const SingleRepository = () => {
   if (error) console.log(`ERROR!: ${error}`);
 
   return (
-    // <View style={styles.itemContainer}>
     <View>
-      <RepositoryItem item={data.repository} />
-      <Pressable
-        style={styles.button}
-        onPress={() => Linking.openURL(data.repository.url)}     
-      >
-        <Text
-          color="title"
-          fontWeight="bold"
-          fontSize="subheading"
+      <View style={styles.itemContainer}>
+        <RepositoryItem item={data.repository} />
+        <Pressable
+          style={styles.button}
+          onPress={() => Linking.openURL(data.repository.url)}     
         >
-          Open in GitHub
-        </Text>
-      </Pressable>
+          <Text
+            color="title"
+            fontWeight="bold"
+            fontSize="subheading"
+          >
+            Open in GitHub
+          </Text>
+        </Pressable>
+      </View>
       <ReviewList id={id} />
     </View>
   )
