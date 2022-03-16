@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 const GithubButton = () => (
   <Pressable
     style={styles.button}
-    onPress={() => Linking.openURL(data.repository.url)}     
+    onPress={() => Linking.openURL(data.repository.url)} 
   >
     <Text
       color="title"
@@ -52,9 +52,12 @@ const RepositoryItem = ({ item, showGit }) => {
   return (
     <Link to={`/repository/${item.id}`}>
       <View>
-        <RepositoryInfo item={item} />
-        <RepositoryMetrics item={item} />
-        {showGit && <GithubButton />}
+        <View style={styles.itemContainer}>
+          <RepositoryInfo item={item} />
+          <RepositoryMetrics item={item} />
+          {showGit && <GithubButton />}
+        </View>
+        {showGit && <View style={styles.separator} />}
       </View>
     </Link>
   );
@@ -70,24 +73,7 @@ export const SingleRepository = () => {
   if (loading) return null;
   if (error) console.log(`ERROR!: ${error}`);
 
-  return (
-    <View>
-        {/* <RepositoryItem item={data.repository} /> */}
-        {/* <Pressable
-          style={styles.button}
-          onPress={() => Linking.openURL(data.repository.url)}     
-        >
-          <Text
-            color="title"
-            fontWeight="bold"
-            fontSize="subheading"
-          >
-            Open in GitHub
-          </Text>
-        </Pressable> */}
-      <ReviewList id={id} repository={data.repository} />
-    </View>
-  )
+  return <ReviewList id={id} repository={data.repository} />;
 };
 
 export default RepositoryItem;

@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   flatlistContainer: {
-    paddingBottom: 350
+    // paddingBottom: 350
   }
 });
 
