@@ -1,16 +1,12 @@
 import { View, StyleSheet, Pressable } from 'react-native';
-import { Link, useParams } from 'react-router-native';
-import { useQuery } from '@apollo/client';
+import { Link } from 'react-router-native';
 import * as Linking from 'expo-linking';
-
-import { GET_REPOSITORY } from '../graphql/queries';
 
 import RepositoryMetrics from './RepositoryMetrics';
 import RepositoryInfo from './RepositoryInfo';
 import Text from './Text';
 
 import theme from '../theme';
-import ReviewList from './ReviewList';
 
 const styles = StyleSheet.create({
   itemContainer: {
@@ -47,7 +43,6 @@ const GithubButton = () => (
   </Pressable>
 );
 
-
 const RepositoryItem = ({ item, showGit }) => {
   return (
     <Link to={`/repository/${item.id}`}>
@@ -61,19 +56,6 @@ const RepositoryItem = ({ item, showGit }) => {
       </View>
     </Link>
   );
-};
-
-export const SingleRepository = () => {
-  const { id } = useParams();
-
-  const { loading, error, data } = useQuery(GET_REPOSITORY, {
-    variables: { id },
-  });
-
-  if (loading) return null;
-  if (error) console.log(`ERROR!: ${error}`);
-
-  return <ReviewList id={id} repository={data.repository} />;
 };
 
 export default RepositoryItem;
