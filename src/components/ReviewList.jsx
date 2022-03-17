@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 
 import { GET_REVIEWS } from '../graphql/queries';
 
-import RepositoryItem from './RepositoryItem';
+import RepositoryItemContainer from './RepositoryItem';
 import ItemSeparator from './ItemSeparator';
 import Text from './Text';
 
@@ -71,11 +71,13 @@ const renderItem = ({ item }) => (
   <ReviewItem item={item} />
 );
 
-const ReviewList = ({ id, repository }) => {
-  console.log(id, 'is id loading????');
-
+const ReviewList = ({ repository }) => {
+  if(!repository) return null;
+  
+  const id = repository.id;
   const { loading, error, data } = useQuery(GET_REVIEWS, {
     variables: { id },
+    fetchPolicy: 'cache-and-network',
   });
 
   if (loading) return null;
@@ -89,7 +91,7 @@ const ReviewList = ({ id, repository }) => {
       renderItem={renderItem}
       contentContainerStyle={styles.flatlistContainer}
       keyExtractor={(item) => item.node.id}
-      ListHeaderComponent={() => <RepositoryItem item={repository} showGit={true} />}
+      ListHeaderComponent={() => <RepositoryItemContainer item={repository} showGit={true} />}
       ItemSeparatorComponent={ItemSeparator}
     />
   );

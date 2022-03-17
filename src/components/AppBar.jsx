@@ -46,6 +46,7 @@ const AppBar = () => {
     <View style={styles.container}>
       <ScrollView style={styles.scrollTainer} horizontal>
         <AppBarTab name="Repositories" link="/"  />
+        <AppBarTab name="Create a Review" />
 
         { currentUser.data && currentUser.data.me
           ? <AppBarTab name="Sign Out" onPress={signOut}/>

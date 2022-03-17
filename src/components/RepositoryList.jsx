@@ -2,12 +2,12 @@ import { FlatList, View, StyleSheet } from 'react-native';
 
 import useRepositories from '../hooks/useRepositories';
 
-import RepositoryItem from './RepositoryItem';
+import RepositoryItemContainer from './RepositoryItem';
 import ItemSeparator from './ItemSeparator';
 
 const renderItem = ({ item }) => (
   <View>
-    <RepositoryItem item={item} />
+    <RepositoryItemContainer item={item} />
   </View>
 );
 
