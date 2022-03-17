@@ -28,10 +28,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const GithubButton = () => (
+const GithubButton = ({ url }) => (
   <Pressable
     style={styles.button}
-    onPress={() => Linking.openURL(data.repository.url)} 
+    onPress={() => Linking.openURL(url)} 
   >
     <Text
       color="title"
@@ -44,13 +44,16 @@ const GithubButton = () => (
 );
 
 const RepositoryItem = ({ item, showGit }) => {
+  // console.log(item);
+  showGit && console.log(item, 'deeerp');
+
   return (
     <Link to={`/repository/${item.id}`}>
       <View>
         <View style={styles.itemContainer}>
           <RepositoryInfo item={item} />
           <RepositoryMetrics item={item} />
-          {showGit && <GithubButton />}
+          {showGit && <GithubButton url={item.url} />}
         </View>
         {showGit && <View style={styles.separator} />}
       </View>

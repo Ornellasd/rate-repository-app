@@ -76,6 +76,9 @@ const renderItem = ({ item }) => (
 );
 
 const ReviewList = ({ id, repository }) => {
+  // console.log(id, 'id loading?');
+  // console.log(repository, 'why not loading????????????????');
+
   const { loading, error, data } = useQuery(GET_REVIEWS, {
     variables: { id },
   });
