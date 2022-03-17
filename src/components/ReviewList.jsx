@@ -33,10 +33,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderRadius: 100,
     borderColor: theme.colors.primary,
     width: 60,
     height: 60,
+    borderRadius: 30,
   },
   rating: {
     color: theme.colors.primary,
@@ -76,9 +76,6 @@ const renderItem = ({ item }) => (
 );
 
 const ReviewList = ({ id, repository }) => {
-  // console.log(id, 'id loading?');
-  // console.log(repository, 'why not loading????????????????');
-
   const { loading, error, data } = useQuery(GET_REVIEWS, {
     variables: { id },
   });

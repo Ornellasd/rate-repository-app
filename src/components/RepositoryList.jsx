@@ -7,17 +7,12 @@ const styles = StyleSheet.create({
   separator: {
     height: 8,
   },
-  itemContainer: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-  },
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const renderItem = ({ item }) => (
-  <View style={styles.itemContainer}>
+  <View>
     <RepositoryItem item={item} />
   </View>
 );

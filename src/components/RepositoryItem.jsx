@@ -44,9 +44,6 @@ const GithubButton = ({ url }) => (
 );
 
 const RepositoryItem = ({ item, showGit }) => {
-  // console.log(item);
-  showGit && console.log(item, 'deeerp');
-
   return (
     <Link to={`/repository/${item.id}`}>
       <View>
