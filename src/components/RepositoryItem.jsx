@@ -1,5 +1,5 @@
 import { View, StyleSheet, Pressable } from 'react-native';
-import { Link } from 'react-router-native';
+import { useNavigate } from 'react-router-native';
 import * as Linking from 'expo-linking';
 
 import RepositoryMetrics from './RepositoryMetrics';
@@ -44,8 +44,12 @@ const GithubButton = ({ url }) => (
 );
 
 const RepositoryItem = ({ item, showGit }) => {
+  const navigate = useNavigate();
+  
   return (
-    <Link to={`/repository/${item.id}`}>
+    <Pressable
+      onPress={() => navigate(`/repository/${item.id}`)}
+    >
       <View>
         <View style={styles.itemContainer}>
           <RepositoryInfo item={item} />
@@ -54,8 +58,8 @@ const RepositoryItem = ({ item, showGit }) => {
         </View>
         {showGit && <View style={styles.separator} />}
       </View>
-    </Link>
-  );
+    </Pressable>
+   );
 };
 
 export default RepositoryItem;

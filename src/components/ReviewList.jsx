@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import { GET_REVIEWS } from '../graphql/queries';
 
 import RepositoryItem from './RepositoryItem';
+import ItemSeparator from './ItemSeparator';
 import Text from './Text';
 
 import theme from '../theme';
@@ -24,9 +25,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.buttonPrimary,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  separator: {
-    height: 8,
   },
   ratingBorder: {
     display: 'flex',
@@ -49,8 +47,6 @@ const styles = StyleSheet.create({
     // paddingBottom: 350
   }
 });
-
-const ItemSeparator = () => <View style={styles.separator} />;
 
 const ReviewItem = ({ item }) => {
   const { createdAt, text, user, rating } = item.node;
@@ -76,6 +72,8 @@ const renderItem = ({ item }) => (
 );
 
 const ReviewList = ({ id, repository }) => {
+  console.log(id, 'is id loading????');
+
   const { loading, error, data } = useQuery(GET_REVIEWS, {
     variables: { id },
   });
