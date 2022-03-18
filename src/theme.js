@@ -27,6 +27,8 @@ const theme = {
   formFields: {
     borderRadius: 3,
     height: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
   },
 };
 

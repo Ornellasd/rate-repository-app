@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.title,
     height: 250,
     // padding: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
+    paddingVertical: theme.formFields.paddingVertical,
+    paddingHorizontal: theme.formFields.paddingHorizontal,
     justifyContent: 'space-around'
   },
   button: {
