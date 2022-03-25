@@ -38,8 +38,12 @@ const validationSchema = yup.object().shape({
     .string()
     .required('Repository name is required.'),
   rating: yup
+    .number().min(0).max(100)
+    .typeError('Rating must be a number.')
+    .required('Rating is required'),
+  review: yup
     .string()
-    .required('Rating is required')
+    .nullable()
 });
 
 const CreateReviewForm = ({ onSubmit }) => {
