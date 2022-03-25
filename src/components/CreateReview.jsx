@@ -1,4 +1,5 @@
 import { View, Pressable , StyleSheet} from 'react-native';
+import { useNavigate } from 'react-router-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -70,12 +71,12 @@ const CreateReviewForm = ({ onSubmit }) => {
 
 const CreateReview = () => {
   const [createReview] = useCreateReview();
+  const navigate = useNavigate();
 
   const onSubmit = async (values) => {
-    const { ownerName, repositoryName, rating, text } = values;
-
     try {
-      await createReview({ ownerName, repositoryName, rating, text });
+      const { data } = await createReview({ ...values });
+      navigate(`/repository/${data.createReview.repositoryId}`);
     } catch(e) {
       console.log(e);
     }
