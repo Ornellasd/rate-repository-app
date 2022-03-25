@@ -10,7 +10,7 @@ const useSignIn = () => {
   const authStorage = useContext(AuthStorageContext);
 
   const signIn = async ({ username, password }) => {
-    return await mutate({
+    const { data } = await mutate({
       variables: {
         credentials: {
           "username": username,
