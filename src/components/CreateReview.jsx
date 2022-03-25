@@ -1,5 +1,6 @@
 import { View, Pressable , StyleSheet} from 'react-native';
 import { Formik } from 'formik';
+import * as yup from 'yup';
 
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
@@ -21,11 +22,31 @@ const styles = StyleSheet.create({
   }
 });
 
+const initialValues = {
+  username: '',
+  repoName: '',
+  rating: '',
+  review: '',
+};
+
+const validationSchema = yup.object().shape({
+  username: yup
+    .string()
+    .min(3, 'Username must be 3 or more characters long.')
+    .required('Username is required.'),
+  repoName: yup
+    .string()
+    .required('Repository name is required.'),
+  rating: yup
+    .string()
+    .required('Rating is required')
+});
+
 const CreateReviewForm = ({ onSubmit }) => {
   return (
     <View style={styles.container}>
       <FormikTextInput name="username" placeholder="Repository owner name" />
-      <FormikTextInput name="reopName" placeholder="Repository name" />
+      <FormikTextInput name="repoName" placeholder="Repository name" />
       <FormikTextInput name="rating" placeholder="Rating between 0 and 100" />
       <FormikTextInput name="review" placeholder="Review" />
 
@@ -39,29 +60,24 @@ const CreateReviewForm = ({ onSubmit }) => {
   );
 };
 
-const initialValues = {
-  username: '',
-  repoName: '',
-  rating: '',
-  review: '',
-};
-
-const CreateReviewContainer = ({ onSubmit }) => (
-  <Formik
-    initialValues={initialValues}
-    onSubmit={onSubmit}
-  >
-    {({ handleSubmit }) => <CreateReviewForm onSubmit={handleSubmit} />}
-  </Formik>
-);
-
 const CreateReview = () => {
-  const onSubmit = () => {
-    console.log('submitting!');
+  const onSubmit = async (values) => {
+    const { username, repoName, rating, review } = values;
+
+    console.log(username);
   };
 
   return <CreateReviewContainer onSubmit={onSubmit} />;
 }
 
+const CreateReviewContainer = ({ onSubmit }) => (
+  <Formik
+    initialValues={initialValues}
+    onSubmit={onSubmit}
+    validationSchema={validationSchema}
+  >
+    {({ handleSubmit }) => <CreateReviewForm onSubmit={handleSubmit} />}
+  </Formik>
+);
 
 export default CreateReview;
