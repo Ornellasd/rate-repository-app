@@ -2,6 +2,8 @@ import { View, Pressable , StyleSheet} from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
+import useCreateReview from '../hooks/useCreateReview';
+
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
 import theme from '../theme';
@@ -25,25 +27,25 @@ const styles = StyleSheet.create({
 });
 
 const initialValues = {
-  username: '',
-  repoName: '',
+  ownerName: '',
+  repositoryName: '',
   rating: '',
-  review: '',
+  text: '',
 };
 
 const validationSchema = yup.object().shape({
-  username: yup
+  ownerName: yup
     .string()
-    .min(3, 'Username must be 3 or more characters long.')
-    .required('Username is required.'),
-  repoName: yup
+    .min(3, 'Repository owner name must be 3 or more characters long.')
+    .required('Repository owner name is required.'),
+  repositoryName: yup
     .string()
     .required('Repository name is required.'),
   rating: yup
     .number().min(0).max(100)
     .typeError('Rating must be a number.')
     .required('Rating is required'),
-  review: yup
+  text: yup
     .string()
     .nullable()
 });
@@ -51,10 +53,10 @@ const validationSchema = yup.object().shape({
 const CreateReviewForm = ({ onSubmit }) => {
   return (
     <View style={styles.container}>
-      <FormikTextInput name="username" placeholder="Repository owner name" />
-      <FormikTextInput name="repoName" placeholder="Repository name" />
+      <FormikTextInput name="ownerName" placeholder="Repository owner name" />
+      <FormikTextInput name="repositoryName" placeholder="Repository name" />
       <FormikTextInput name="rating" placeholder="Rating between 0 and 100" />
-      <FormikTextInput name="review" placeholder="Review" />
+      <FormikTextInput name="text" placeholder="Review" />
 
       <Pressable 
         onPress={onSubmit}
@@ -67,10 +69,16 @@ const CreateReviewForm = ({ onSubmit }) => {
 };
 
 const CreateReview = () => {
-  const onSubmit = async (values) => {
-    const { username, repoName, rating, review } = values;
+  const [createReview] = useCreateReview();
 
-    console.log(username);
+  const onSubmit = async (values) => {
+    const { ownerName, repositoryName, rating, text } = values;
+
+    try {
+      await createReview({ ownerName, repositoryName, rating, text });
+    } catch(e) {
+      console.log(e);
+    }
   };
 
   return <CreateReviewContainer onSubmit={onSubmit} />;
