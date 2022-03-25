@@ -42,14 +42,20 @@ const AppBar = () => {
     apolloClient.resetStore();
   };
 
+  const currentUserTabs = () => (
+    <>
+      <AppBarTab name="Create a Review" link="/createreview" />
+      <AppBarTab name="Sign Out" onPress={signOut}/>
+    </>
+  );
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollTainer} horizontal>
         <AppBarTab name="Repositories" link="/"  />
-        <AppBarTab name="Create a Review" link="/createreview" />
 
         { currentUser.data && currentUser.data.me
-          ? <AppBarTab name="Sign Out" onPress={signOut}/>
+          ? currentUserTabs()
           : <AppBarTab name="Sign In" link="/signin" />
         }
 

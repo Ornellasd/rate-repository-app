@@ -11,8 +11,7 @@ export const AUTHENTICATE_USER = gql`
 export const CREATE_REVIEW = gql`
   mutation createReview($review: CreateReviewInput) {
     createReview(review: $review) {
-      rating
-      text
+      repositoryId
     }
   }
 `;
