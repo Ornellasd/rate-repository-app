@@ -11,6 +11,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.title,
     paddingVertical: theme.formFields.paddingVertical,
     paddingHorizontal: theme.formFields.paddingHorizontal,
+    height: 390,
+    justifyContent: 'space-between'
   },
   button: {
     backgroundColor: theme.colors.buttonPrimary,

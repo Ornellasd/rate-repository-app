@@ -11,11 +11,11 @@ import theme from '../theme';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.title,
-    height: 250,
+    height: 230,
     // padding: 10,
     paddingVertical: theme.formFields.paddingVertical,
     paddingHorizontal: theme.formFields.paddingHorizontal,
-    justifyContent: 'space-around'
+    justifyContent: 'space-between'
   },
   button: {
     height: theme.formFields.height,
