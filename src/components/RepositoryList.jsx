@@ -8,9 +8,7 @@ import RepositoryItemContainer from './RepositoryItem';
 import ItemSeparator from './ItemSeparator';
 
 const renderItem = ({ item }) => (
-  <View>
-    <RepositoryItemContainer item={item} />
-  </View>
+  <RepositoryItemContainer item={item} />
 );
 
 export const RepositoryListContainer = ({ repositories }) => {
@@ -23,29 +21,31 @@ export const RepositoryListContainer = ({ repositories }) => {
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
+      ListHeaderComponent={() => <SortPicker />}
     />
   );
-}
+};
+
+const SortPicker = () => {
+  const [sortPrinciple, setSortPrinciple] = useState('latest');
+
+  return (
+    <Picker
+      selectedValue={sortPrinciple}
+      onValueChange={(itemValue, itemIndex) =>
+        setSortPrinciple(itemValue)
+    }>
+      <Picker.Item label="Latest repositories" value="latest" />
+      <Picker.Item label="Highest rated repositories" value="highest" />
+      <Picker.Item label="Lowest rated repositories" value="lowest" />
+    </Picker>
+  );
+};
 
 const RepositoryList = () => {
   const { repositories } = useRepositories();
-  const [sortPrinciple, setSortPrinciple] = useState('latest');
-  console.log(sortPrinciple);
-
-  return (
-    <View>
-      <Picker
-        selectedValue={sortPrinciple}
-        onValueChange={(itemValue, itemIndex) =>
-          setSortPrinciple(itemValue)
-      }>
-        <Picker.Item label="Latest" value="latest" />
-        <Picker.Item label="Highest Rated" value="highest" />
-        <Picker.Item label="Lowest Rated" value="lowest" />
-      </Picker>
-      <RepositoryListContainer repositories={repositories} />
-    </View>
-  )
+  
+  return <RepositoryListContainer repositories={repositories} />; 
 };
 
 export default RepositoryList;
