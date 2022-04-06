@@ -1,10 +1,14 @@
 import { Pressable, StyleSheet, View } from 'react-native';
+import { useNavigate } from 'react-router-native';
 import { Formik } from 'formik';
+import { useMutation } from '@apollo/client';
 import * as yup from 'yup';
 
 import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 import theme from '../theme';
+
+import { CREATE_USER } from '../graphql/mutations';
 
 const styles = StyleSheet.create({
   container: {
@@ -73,8 +77,28 @@ const SignUpContainer = ({ onSubmit }) => {
 };
 
 const SignUp = () => {
+  const [mutate, result] = useMutation(CREATE_USER);
+  const navigate = useNavigate();
+
   const onSubmit = async (values) => {
     const { username, password, passwordConfirm } = values;
+
+    if(password === passwordConfirm) {
+      try {
+        await mutate({
+          variables: {
+            user: {
+              username,
+              password
+            }
+          }
+        });
+        
+        navigate('/');
+      } catch(e) {
+        console.log(e);
+      }
+    }
   };
 
   return <SignUpContainer onSubmit={onSubmit} />;
