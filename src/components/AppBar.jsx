@@ -49,6 +49,13 @@ const AppBar = () => {
     </>
   );
 
+  const nonUserTabs = () => (
+    <>
+      <AppBarTab name="Sign In" link="/signin" />
+      <AppBarTab name="Sign Up" link="/signup" />
+    </>
+  );
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollTainer} horizontal>
@@ -56,7 +63,7 @@ const AppBar = () => {
 
         { currentUser.data && currentUser.data.me
           ? currentUserTabs()
-          : <AppBarTab name="Sign In" link="/signin" />
+          : nonUserTabs()
         }
 
       </ScrollView>
