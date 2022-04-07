@@ -40,16 +40,16 @@ const SortPicker = ({ sortPrinciple, sortChange }) => {
         handleSortChange(itemValue)
 
     }>
-      <Picker.Item label="Latest repositories" value="latest" />
-      <Picker.Item label="Highest rated repositories" value="highest" />
+      <Picker.Item label="Latest repositories" value="CREATED_AT" />
+      <Picker.Item label="Highest rated repositories" value="RATING_AVERAGE" />
       <Picker.Item label="Lowest rated repositories" value="lowest" />
     </Picker>
   );
 };
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
   const [sortPrinciple, setSortPrinciple] = useState('latest');
+  const { repositories } = useRepositories(sortPrinciple);
   
   const sortChange = (selectedSort) => {
     setSortPrinciple(selectedSort);
