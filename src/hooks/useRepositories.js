@@ -7,10 +7,31 @@ const useRepositories = (sortPrinciple) => {
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
 
+  let sortVariables;
+
+  switch(sortPrinciple) {
+    case 'latest':
+      sortVariables = {
+        orderBy: 'CREATED_AT',
+        orderDirection: 'DESC'
+      };
+      break;
+    case 'highest':
+      sortVariables = {
+        orderBy: 'RATING_AVERAGE',
+        orderDirection: 'DESC'
+      };
+      break;
+    case 'lowest': 
+      sortVariables = {
+        orderBy: 'RATING_AVERAGE',
+        orderDirection: 'ASC'
+      };
+      break;
+  };
+
   const result = useQuery(GET_REPOSITORIES, {
-    variables: {
-      orderBy: sortPrinciple
-    },
+    variables: sortVariables,
     fetchPolicy: 'cache-and-network',
   });
 
