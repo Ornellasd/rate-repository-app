@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDebounce, useDebouncedCallback } from 'use-debounce/lib';
 import { FlatList, View, StyleSheet, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -122,14 +122,51 @@ export class RepositoryListContainer extends React.Component {
   }
 }
 
+const determineSortVariables = (sortPrinciple) => {
+  let sortVariables;
+
+  switch(sortPrinciple) {
+    case 'latest':
+      sortVariables = {
+        orderBy: 'CREATED_AT',
+        orderDirection: 'DESC'
+      };
+      break;
+    case 'highest':
+      sortVariables = {
+        orderBy: 'RATING_AVERAGE',
+        orderDirection: 'DESC'
+      };
+      break;
+    case 'lowest': 
+      sortVariables = {
+        orderBy: 'RATING_AVERAGE',
+        orderDirection: 'ASC'
+      };
+      break;
+  };
+
+  return sortVariables;
+};
+
 const RepositoryList = () => {
   const [sortPrinciple, setSortPrinciple] = useState('latest');
   const [searchFilter, setSearchFilter] = useState('');
   const [debouncedSearchFilter] = useDebounce(searchFilter, 1000);
 
-  console.log(debouncedSearchFilter);
+  let queryVariables;
 
-  const { repositories } = useRepositories(sortPrinciple);
+  const determineQueryVariables = () => {
+    const sortVariables = determineSortVariables(sortPrinciple);
+    queryVariables = debouncedSearchFilter.length > 0 ? { ...sortVariables, searchKeyword: debouncedSearchFilter.toLowerCase() } : { ...sortVariables };
+    // console.log(queryVariables, 'from useEffect');
+  };
+
+  useEffect(() => {
+    determineQueryVariables()
+  }, [sortPrinciple, debouncedSearchFilter]);
+
+  const { repositories } = useRepositories(queryVariables);
 
   return (
     <RepositoryListContainer 
