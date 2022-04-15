@@ -56,13 +56,9 @@ const SortPicker = ({ sortPrinciple, sortChange }) => {
   );
 };
 
-const RepoFilter = () => {
-  const [filterText, setFilterText] = useState('');
-
-  console.log(filterText);
-
+const RepoFilter = ({ searchFilter, filterChange }) => {
   const clearFilterText = () => {
-    setFilterText('');
+    filterChange('');
   };
 
   return (
@@ -70,8 +66,8 @@ const RepoFilter = () => {
       <Icon name="search1" size={20} color="#000" style={styles.searchIcon} />
       <TextInput 
         style={styles.filterInput} 
-        onChangeText={value => setFilterText(value)} 
-        value={filterText}
+        onChangeText={value => filterChange(value)} 
+        value={searchFilter}
       />
       <Pressable onPressIn={() => clearFilterText()}>
         <Icon name="close" size={20} color="#000" style={styles.closeIcon} />
@@ -80,14 +76,14 @@ const RepoFilter = () => {
   );
 };
 
-const Header = ({ sortPrinciple, sortChange }) => (
+const Header = ({ sortPrinciple, sortChange, searchFilter, filterChange }) => (
   <View>
-    <RepoFilter />
+    <RepoFilter searchFilter={searchFilter} filterChange={filterChange} />
     <SortPicker sortPrinciple={sortPrinciple} sortChange={sortChange} />
   </View>
 );
 
-export const RepositoryListContainer = ({ repositories, sortPrinciple, sortChange }) => {
+export const RepositoryListContainer = ({ repositories, sortPrinciple, sortChange, searchFilter, filterChange, }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
@@ -97,20 +93,43 @@ export const RepositoryListContainer = ({ repositories, sortPrinciple, sortChang
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
-      ListHeaderComponent={() => <Header sortPrinciple={sortPrinciple} sortChange={sortChange} />}
+      ListHeaderComponent={() => 
+        <Header 
+          sortPrinciple={sortPrinciple} 
+          sortChange={sortChange}
+          searchFilter={searchFilter}
+          filterChange={filterChange} 
+        />
+      }
     />
   );
 };
 
 const RepositoryList = () => {
   const [sortPrinciple, setSortPrinciple] = useState('latest');
+  const [searchFilter, setSearchFilter] = useState('');
+
+  console.log(searchFilter);
+
   const { repositories } = useRepositories(sortPrinciple);
   
   const sortChange = (selectedSort) => {
     setSortPrinciple(selectedSort);
   };
 
-  return <RepositoryListContainer repositories={repositories} sortPrinciple={sortPrinciple} sortChange={sortChange} />; 
+  const filterChange = (filter) => {
+    setSearchFilter(filter);
+  };
+
+  return (
+    <RepositoryListContainer 
+      repositories={repositories} 
+      sortPrinciple={sortPrinciple} 
+      sortChange={sortChange}
+      filterChange={filterChange}
+      searchFilter={searchFilter}
+    />
+  ); 
 };
 
 export default RepositoryList;
