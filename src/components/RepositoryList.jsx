@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { useDebounce, useDebouncedCallback } from 'use-debounce/lib';
 import { FlatList, View, StyleSheet, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -38,16 +39,16 @@ const renderItem = ({ item }) => (
   </View>
 );
 
-const SortPicker = ({ sortPrinciple, sortChange }) => {
-  const handleSortChange = (sort) => {
-    sortChange(sort);
+const SortPicker = ({ sortPrinciple, setSortPrinciple }) => {
+  const handlesetSortPrinciple = (sort) => {
+    setSortPrinciple(sort);
   };
 
   return (
     <Picker
       selectedValue={sortPrinciple}
       onValueChange={(itemValue, itemIndex) =>
-        handleSortChange(itemValue)
+        handlesetSortPrinciple(itemValue)
 
     }>
       <Picker.Item label="Latest repositories" value="latest" />
@@ -57,9 +58,9 @@ const SortPicker = ({ sortPrinciple, sortChange }) => {
   );
 };
 
-const RepoFilter = ({ searchFilter, filterChange }) => {
+const RepoFilter = ({ searchFilter, setSearchFilter }) => {  
   const clearFilterText = () => {
-    filterChange('');
+    setSearchFilter('');
   };
   
   return (
@@ -67,38 +68,38 @@ const RepoFilter = ({ searchFilter, filterChange }) => {
       <Icon name="search1" size={20} color="#000" style={styles.searchIcon} />
       <TextInput 
         style={styles.filterInput} 
-        onChangeText={value => filterChange(value)} 
+        onChangeText={value => setSearchFilter(value)}
         value={searchFilter}
       />
       {searchFilter.length > 0 &&
         <Pressable onPressIn={() => clearFilterText()}>
-        <Icon name="close" size={20} color="#000" style={styles.closeIcon} />
+          <Icon name="close" size={20} color="#000" style={styles.closeIcon} />
         </Pressable>
       }
     </View>
   );
 };
 
-const Header = ({ sortPrinciple, sortChange, searchFilter, filterChange }) => (
+const Header = ({ sortPrinciple, setSortPrinciple, searchFilter, setSearchFilter }) => (
   <View>
-    <RepoFilter searchFilter={searchFilter} filterChange={filterChange} />
-    <SortPicker sortPrinciple={sortPrinciple} sortChange={sortChange} />
+    <RepoFilter searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
+    <SortPicker sortPrinciple={sortPrinciple} setSortPrinciple={setSortPrinciple} />
   </View>
 );
 
 export class RepositoryListContainer extends React.Component {
   renderHeader = () => {
     // this.props contains the component's props
-    const { repositories, sortPrinciple, sortChange, searchFilter, filterChange } = this.props;
+    const { sortPrinciple, setSortPrinciple, searchFilter, setSearchFilter } = this.props;
 
     // ...
 
     return (
       <Header 
         sortPrinciple={sortPrinciple} 
-        sortChange={sortChange}
+        setSortPrinciple={setSortPrinciple}
         searchFilter={searchFilter}
-        filterChange={filterChange} 
+        setSearchFilter={setSearchFilter} 
       />
     );
   };
@@ -124,25 +125,18 @@ export class RepositoryListContainer extends React.Component {
 const RepositoryList = () => {
   const [sortPrinciple, setSortPrinciple] = useState('latest');
   const [searchFilter, setSearchFilter] = useState('');
+  const [debouncedSearchFilter] = useDebounce(searchFilter, 1000);
 
-  console.log(searchFilter);
+  console.log(debouncedSearchFilter);
 
   const { repositories } = useRepositories(sortPrinciple);
-  
-  const sortChange = (selectedSort) => {
-    setSortPrinciple(selectedSort);
-  };
-
-  const filterChange = (filter) => {
-    setSearchFilter(filter);
-  };
 
   return (
     <RepositoryListContainer 
       repositories={repositories} 
       sortPrinciple={sortPrinciple} 
-      sortChange={sortChange}
-      filterChange={setSearchFilter}
+      setSortPrinciple={setSortPrinciple}
+      setSearchFilter={setSearchFilter}
       searchFilter={searchFilter}
     />
   ); 
