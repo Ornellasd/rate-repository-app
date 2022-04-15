@@ -61,7 +61,7 @@ const RepoFilter = ({ searchFilter, filterChange }) => {
   const clearFilterText = () => {
     filterChange('');
   };
-
+  
   return (
     <View style={styles.filterInputContainer}>
       <Icon name="search1" size={20} color="#000" style={styles.searchIcon} />
@@ -70,9 +70,11 @@ const RepoFilter = ({ searchFilter, filterChange }) => {
         onChangeText={value => filterChange(value)} 
         value={searchFilter}
       />
-      <Pressable onPressIn={() => clearFilterText()}>
+      {searchFilter.length > 0 &&
+        <Pressable onPressIn={() => clearFilterText()}>
         <Icon name="close" size={20} color="#000" style={styles.closeIcon} />
-      </Pressable>
+        </Pressable>
+      }
     </View>
   );
 };
@@ -83,28 +85,6 @@ const Header = ({ sortPrinciple, sortChange, searchFilter, filterChange }) => (
     <SortPicker sortPrinciple={sortPrinciple} sortChange={sortChange} />
   </View>
 );
-
-// export const RepositoryListContainer = ({ repositories, sortPrinciple, sortChange, searchFilter, filterChange, }) => {
-//   const repositoryNodes = repositories
-//     ? repositories.edges.map(edge => edge.node)
-//     : [];
-
-//   return (
-//     <FlatList
-//       data={repositoryNodes}
-//       ItemSeparatorComponent={ItemSeparator}
-//       renderItem={renderItem}
-//       ListHeaderComponent={() => 
-//         <Header 
-//           sortPrinciple={sortPrinciple} 
-//           sortChange={sortChange}
-//           searchFilter={searchFilter}
-//           filterChange={filterChange} 
-//         />
-//       }
-//     />
-//   );
-// };
 
 export class RepositoryListContainer extends React.Component {
   renderHeader = () => {
@@ -129,7 +109,7 @@ export class RepositoryListContainer extends React.Component {
     const repositoryNodes = repositories
       ? repositories.edges.map(edge => edge.node)
       : [];
-      
+
     return (
       <FlatList
         data={repositoryNodes}
