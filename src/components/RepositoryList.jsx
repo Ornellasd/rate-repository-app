@@ -1,12 +1,9 @@
 import { useState } from 'react';
-import { FlatList, View, StyleSheet, TextInput } from 'react-native';
+import { FlatList, View, StyleSheet, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import useRepositories from '../hooks/useRepositories';
-
-// import TextInput from './TextInput';
-
 
 import RepositoryItemContainer from './RepositoryItem';
 import ItemSeparator from './ItemSeparator';
@@ -20,7 +17,8 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 8,
     borderRadius: 4,
-
+    shadowColor: '#000',
+    elevation: 5,
   },
   filterInput: {
     flex: 1,
@@ -59,11 +57,25 @@ const SortPicker = ({ sortPrinciple, sortChange }) => {
 };
 
 const RepoFilter = () => {
+  const [filterText, setFilterText] = useState('');
+
+  console.log(filterText);
+
+  const clearFilterText = () => {
+    setFilterText('');
+  };
+
   return (
     <View style={styles.filterInputContainer}>
       <Icon name="search1" size={20} color="#000" style={styles.searchIcon} />
-      <TextInput style={styles.filterInput} />
-      <Icon name="close" size={20} color="#000" style={styles.closeIcon} />
+      <TextInput 
+        style={styles.filterInput} 
+        onChangeText={value => setFilterText(value)} 
+        value={filterText}
+      />
+      <Pressable onPressIn={() => clearFilterText()}>
+        <Icon name="close" size={20} color="#000" style={styles.closeIcon} />
+      </Pressable>
     </View>
   );
 };
