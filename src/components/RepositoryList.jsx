@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { FlatList, View, StyleSheet, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -83,27 +84,62 @@ const Header = ({ sortPrinciple, sortChange, searchFilter, filterChange }) => (
   </View>
 );
 
-export const RepositoryListContainer = ({ repositories, sortPrinciple, sortChange, searchFilter, filterChange, }) => {
-  const repositoryNodes = repositories
-    ? repositories.edges.map(edge => edge.node)
-    : [];
+// export const RepositoryListContainer = ({ repositories, sortPrinciple, sortChange, searchFilter, filterChange, }) => {
+//   const repositoryNodes = repositories
+//     ? repositories.edges.map(edge => edge.node)
+//     : [];
 
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={renderItem}
-      ListHeaderComponent={() => 
-        <Header 
-          sortPrinciple={sortPrinciple} 
-          sortChange={sortChange}
-          searchFilter={searchFilter}
-          filterChange={filterChange} 
-        />
-      }
-    />
-  );
-};
+//   return (
+//     <FlatList
+//       data={repositoryNodes}
+//       ItemSeparatorComponent={ItemSeparator}
+//       renderItem={renderItem}
+//       ListHeaderComponent={() => 
+//         <Header 
+//           sortPrinciple={sortPrinciple} 
+//           sortChange={sortChange}
+//           searchFilter={searchFilter}
+//           filterChange={filterChange} 
+//         />
+//       }
+//     />
+//   );
+// };
+
+export class RepositoryListContainer extends React.Component {
+  renderHeader = () => {
+    // this.props contains the component's props
+    const { repositories, sortPrinciple, sortChange, searchFilter, filterChange } = this.props;
+
+    // ...
+
+    return (
+      <Header 
+        sortPrinciple={sortPrinciple} 
+        sortChange={sortChange}
+        searchFilter={searchFilter}
+        filterChange={filterChange} 
+      />
+    );
+  };
+
+  render() {
+    const { repositories } = this.props;
+
+    const repositoryNodes = repositories
+      ? repositories.edges.map(edge => edge.node)
+      : [];
+      
+    return (
+      <FlatList
+        data={repositoryNodes}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={renderItem}
+        ListHeaderComponent={this.renderHeader}
+      />
+    );
+  }
+}
 
 const RepositoryList = () => {
   const [sortPrinciple, setSortPrinciple] = useState('latest');
@@ -126,7 +162,7 @@ const RepositoryList = () => {
       repositories={repositories} 
       sortPrinciple={sortPrinciple} 
       sortChange={sortChange}
-      filterChange={filterChange}
+      filterChange={setSearchFilter}
       searchFilter={searchFilter}
     />
   ); 
