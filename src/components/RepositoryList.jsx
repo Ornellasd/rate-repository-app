@@ -1,36 +1,17 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useDebounce, useDebouncedCallback } from 'use-debounce/lib';
-import { FlatList, View, StyleSheet, TextInput, Pressable, TouchableOpacity } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import Icon from 'react-native-vector-icons/AntDesign';
+import { useDebounce } from 'use-debounce/lib';
+import { FlatList, View, StyleSheet } from 'react-native';
 
 import useRepositories from '../hooks/useRepositories';
 
 import RepositoryItemContainer from './RepositoryItem';
 import ItemSeparator from './ItemSeparator';
+import RepoFilter from './RepoFilter';
+import SortPicker from './SortPicker';
 
 const styles = StyleSheet.create({
-  filterInputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    margin: 10,
-    padding: 8,
-    borderRadius: 4,
-    shadowColor: '#000',
-    elevation: 5,
-  },
-  filterInput: {
-    flex: 1,
-  },
-  searchIcon: {
-    paddingRight: 20,
-  },
-  closeIcon: {
-    paddingLeft: 20,
-  }
+
 });
 
 const renderItem = ({ item }) => (
@@ -38,47 +19,6 @@ const renderItem = ({ item }) => (
     <RepositoryItemContainer item={item} />
   </View>
 );
-
-const SortPicker = ({ sortPrinciple, setSortPrinciple }) => {
-  const handlesetSortPrinciple = (sort) => {
-    setSortPrinciple(sort);
-  };
-
-  return (
-    <Picker
-      selectedValue={sortPrinciple}
-      onValueChange={(itemValue, itemIndex) =>
-        handlesetSortPrinciple(itemValue)
-
-    }>
-      <Picker.Item label="Latest repositories" value="latest" />
-      <Picker.Item label="Highest rated repositories" value="highest" />
-      <Picker.Item label="Lowest rated repositories" value="lowest" />
-    </Picker>
-  );
-};
-
-const RepoFilter = ({ searchFilter, setSearchFilter }) => {  
-  const clearFilterText = () => {
-    setSearchFilter('');
-  };
-  
-  return (
-    <View style={styles.filterInputContainer}>
-      <Icon name="search1" size={20} color="#000" style={styles.searchIcon} />
-      <TextInput 
-        style={styles.filterInput} 
-        onChangeText={value => setSearchFilter(value)}
-        value={searchFilter}
-      />
-      {searchFilter.length > 0 &&
-        <Pressable onPressIn={() => clearFilterText()}>
-          <Icon name="close" size={20} color="#000" style={styles.closeIcon} />
-        </Pressable>
-      }
-    </View>
-  );
-};
 
 const Header = ({ sortPrinciple, setSortPrinciple, searchFilter, setSearchFilter }) => (
   <View>
@@ -89,10 +29,7 @@ const Header = ({ sortPrinciple, setSortPrinciple, searchFilter, setSearchFilter
 
 export class RepositoryListContainer extends React.Component {
   renderHeader = () => {
-    // this.props contains the component's props
     const { sortPrinciple, setSortPrinciple, searchFilter, setSearchFilter } = this.props;
-
-    // ...
 
     return (
       <Header 
@@ -154,6 +91,7 @@ const RepositoryList = () => {
   const [searchFilter, setSearchFilter] = useState('');
   const [debouncedSearchFilter] = useDebounce(searchFilter, 1000);
 
+  /// fix order of operations for this sortVariables
   const sortVariables = determineSortVariables(sortPrinciple);
 
   const [queryVariables, setQueryVariables] = useState({...sortVariables});

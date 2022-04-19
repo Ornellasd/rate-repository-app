@@ -4,6 +4,8 @@ import { useQuery } from '@apollo/client';
 import { GET_REPOSITORIES } from '../graphql/queries';
 
 const useRepositories = (queryVariables) => {
+  // console.log(queryVariables);
+
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
 
