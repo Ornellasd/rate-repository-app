@@ -154,17 +154,16 @@ const RepositoryList = () => {
   const [searchFilter, setSearchFilter] = useState('');
   const [debouncedSearchFilter] = useDebounce(searchFilter, 1000);
 
-  let queryVariables;
+  const sortVariables = determineSortVariables(sortPrinciple);
 
-  const determineQueryVariables = () => {
-    const sortVariables = determineSortVariables(sortPrinciple);
-    queryVariables = debouncedSearchFilter.length > 0 ? { ...sortVariables, searchKeyword: debouncedSearchFilter.toLowerCase() } : { ...sortVariables };
-    // console.log(queryVariables, 'from useEffect');
-  };
+  const [queryVariables, setQueryVariables] = useState({...sortVariables});
 
   useEffect(() => {
-    determineQueryVariables()
-  }, [sortPrinciple, debouncedSearchFilter]);
+    setQueryVariables({
+      ...sortVariables,
+      searchKeyword: debouncedSearchFilter.toLowerCase(),
+    });
+  }, [debouncedSearchFilter]);
 
   const { repositories } = useRepositories(queryVariables);
 
