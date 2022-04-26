@@ -1,8 +1,15 @@
 import { useEffect } from 'react';
 
 import { StyleSheet, View, BackHandler, Alert } from 'react-native';
+
+//
 import { Route, Routes, Navigate } from 'react-router-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//
+
 import { useBackHandler } from '../hooks/useBackHandler';
+import { navigationRef } from '../utils/rootNavigation';
 
 import RepositoryList from './RepositoryList';
 import SingleRepository from './SingleRepository';
@@ -18,6 +25,8 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
 });
+
+const Stack = createNativeStackNavigator();
 
 const Main = () => {
   const backExitAction = () => {
@@ -41,14 +50,24 @@ const Main = () => {
   return (
     <View style={styles.container}>
       <AppBar />
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<RepositoryList />} exact />
         <Route path="/signin" element={<SignIn />} exact />
         <Route path="/signup" element={<SignUp />} exact />
         <Route path="/createreview" element={<CreateReview />} exact />
         <Route path="/repository/:id" element={<SingleRepository />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      </Routes> */}
+      {/* START react navigation implementation */}
+        <NavigationContainer ref={navigationRef}>
+          <Stack.Navigator>
+            <Stack.Screen name="Repositories" component={RepositoryList} />
+            <Stack.Screen name="Sign In" component={SignIn} />
+            <Stack.Screen name="Sign Up" component={SignUp} />
+            <Stack.Screen name="Create Review" component={CreateReview} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      {/* END react navigation implementation */}
     </View>
   );
 };
