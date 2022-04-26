@@ -1,15 +1,13 @@
-import { useEffect } from 'react';
+import React from'react';
 
 import { StyleSheet, View, BackHandler, Alert } from 'react-native';
 
-//
-import { Route, Routes, Navigate } from 'react-router-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-//
 
 import { useBackHandler } from '../hooks/useBackHandler';
-import { navigationRef } from '../utils/rootNavigation';
+import { navigationRef, navigate } from '../utils/rootNavigation';
+
 
 import RepositoryList from './RepositoryList';
 import SingleRepository from './SingleRepository';
@@ -27,19 +25,24 @@ const styles = StyleSheet.create({
 });
 
 const Stack = createNativeStackNavigator();
+const routeNameRef = React.createRef();
+const previousRouteNameRef = React.createRef();
 
-const Main = () => {
+const Main = () => {  
   const backExitAction = () => {
-    
-    Alert.alert("Hold on!", "Are you sure you want to exit app?", [
-      {
-        text: "Cancel",
-        onPress: () => null,
-        style: "cancel"
-      },
-      { text: "YES", onPress: () => BackHandler.exitApp() }
-    ]);
-    return true;
+    if(routeNameRef.current === "Repositories") {
+      Alert.alert("Hold on!", "Are you sure you want to exit app?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    } else {
+      navigate(previousRouteNameRef.current);
+    }
   };
 
   useBackHandler(() => {
@@ -47,19 +50,23 @@ const Main = () => {
     return true;
   });
 
+
   return (
     <View style={styles.container}>
       <AppBar />
-      {/* <Routes>
-        <Route path="/" element={<RepositoryList />} exact />
-        <Route path="/signin" element={<SignIn />} exact />
-        <Route path="/signup" element={<SignUp />} exact />
-        <Route path="/createreview" element={<CreateReview />} exact />
-        <Route path="/repository/:id" element={<SingleRepository />} exact />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes> */}
-      {/* START react navigation implementation */}
-        <NavigationContainer ref={navigationRef}>
+        <NavigationContainer 
+          ref={navigationRef}
+          onReady={
+            () => {
+              routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+            }
+          }
+          
+          onStateChange={() => {
+            previousRouteNameRef.current = routeNameRef.current;
+            routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+          }}
+        >
           <Stack.Navigator
             screenOptions={{
               headerShown: false,
@@ -72,7 +79,6 @@ const Main = () => {
             <Stack.Screen name="Create a Review" component={CreateReview} />
           </Stack.Navigator>
         </NavigationContainer>
-      {/* END react navigation implementation */}
     </View>
   );
 };

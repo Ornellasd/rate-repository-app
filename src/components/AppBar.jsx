@@ -27,13 +27,6 @@ const styles = StyleSheet.create({
   }
 });
 
-// const AppBarTab = ({ name, link="", onPress }) => (
-//   <Link to={link} style={styles.tab}>
-//     <Text color="title" fontWeight="bold" fontSize="subheading" onPress={onPress}>{name}</Text>
-//   </Link>
-// );
-
-
 const AppBarTab = ({ name, onPress }) => (
   <Pressable
     style={styles.tab}
