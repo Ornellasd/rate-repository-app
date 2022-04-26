@@ -60,7 +60,11 @@ const Main = () => {
       </Routes> */}
       {/* START react navigation implementation */}
         <NavigationContainer ref={navigationRef}>
-          <Stack.Navigator>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
             <Stack.Screen name="Repositories" component={RepositoryList} />
             <Stack.Screen name="Sign In" component={SignIn} />
             <Stack.Screen name="Sign Up" component={SignUp} />
