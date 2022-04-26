@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
 // );
 
 
-const AppBarTab = ({ name }) => (
+const AppBarTab = ({ name, onPress }) => (
   <Pressable
     style={styles.tab}
-    onPress={() => RootNavigation.navigate(name) }
+    onPress={name === 'Sign Out' ? onPress : () => RootNavigation.navigate(name)}
   >
     <Text color="title" fontWeight="bold" fontSize="subheading">{name}</Text>
   </Pressable>
@@ -56,16 +56,15 @@ const AppBar = ({ navigation }) => {
 
   const currentUserTabs = () => (
     <>
-      <AppBarTab name="Create a Review" link="/createreview" />
+      <AppBarTab name="Create a Review" />
       <AppBarTab name="Sign Out" onPress={signOut}/>
     </>
   );
 
   const nonUserTabs =  () => (
     <>
-      <AppBarTab name="Sign In" onPress={() => navigation.navigate('Sign In')} />
-      {/* <AppBarTab name="Sign In" link="/signin" /> */}
-      <AppBarTab name="Sign Up" link="/signup" />
+      <AppBarTab name="Sign In" />
+      <AppBarTab name="Sign Up" />
     </>
   );
 

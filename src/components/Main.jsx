@@ -64,7 +64,7 @@ const Main = () => {
             <Stack.Screen name="Repositories" component={RepositoryList} />
             <Stack.Screen name="Sign In" component={SignIn} />
             <Stack.Screen name="Sign Up" component={SignUp} />
-            <Stack.Screen name="Create Review" component={CreateReview} />
+            <Stack.Screen name="Create a Review" component={CreateReview} />
           </Stack.Navigator>
         </NavigationContainer>
       {/* END react navigation implementation */}
