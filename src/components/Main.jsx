@@ -1,5 +1,8 @@
-import { StyleSheet, View } from 'react-native';
+import { useEffect } from 'react';
+
+import { StyleSheet, View, BackHandler, Alert } from 'react-native';
 import { Route, Routes, Navigate } from 'react-router-native';
+import { useBackHandler } from '../hooks/useBackHandler';
 
 import RepositoryList from './RepositoryList';
 import SingleRepository from './SingleRepository';
@@ -17,6 +20,24 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
+  const backExitAction = () => {
+    
+    Alert.alert("Hold on!", "Are you sure you want to exit app?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  };
+
+  useBackHandler(() => {
+    backExitAction();
+    return true;
+  });
+
   return (
     <View style={styles.container}>
       <AppBar />
