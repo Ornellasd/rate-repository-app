@@ -2,6 +2,8 @@ import { View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import * as Linking from 'expo-linking';
 
+import * as RootNavigation from '../utils/rootNavigation';
+
 import RepositoryMetrics from './RepositoryMetrics';
 import RepositoryInfo from './RepositoryInfo';
 import Text from './Text';
@@ -44,11 +46,16 @@ const GithubButton = ({ url }) => (
 );
 
 const RepositoryItem = ({ item, showGit }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   
   return (
     <Pressable
-      onPress={() => navigate(`/repository/${item.id}`)}
+      // onPress={() => navigate(`/repository/${item.id}`)}
+      onPress={() => {
+        RootNavigation.navigate('Repository', {
+          itemId: item.id
+        })
+      }}
     >
       <View>
         <View style={styles.itemContainer}>

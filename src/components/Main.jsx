@@ -66,6 +66,7 @@ const Main = () => {
             }}
           >
             <Stack.Screen name="Repositories" component={RepositoryList} />
+            <Stack.Screen name="Repository" component={SingleRepository} />
             <Stack.Screen name="Sign In" component={SignIn} />
             <Stack.Screen name="Sign Up" component={SignUp} />
             <Stack.Screen name="Create a Review" component={CreateReview} />
