@@ -63,7 +63,7 @@ const Main = () => {
           }
           
           onStateChange={() => {
-            previousRouteNameRef.current = routeNameRef.current;
+            previousRouteNameRef.current = 'Repositories';
             routeNameRef.current = navigationRef.current.getCurrentRoute().name;
           }}
         >
