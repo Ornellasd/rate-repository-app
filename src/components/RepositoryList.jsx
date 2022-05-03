@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce/lib';
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, Text } from 'react-native';
 
-import useRepositories from '../hooks/useRepositories';
+// import useRepositories from '../hooks/useRepositories';
+import useRepositories from '../hooks/useRepositoriesNEW';
 
 import RepositoryItemContainer from './RepositoryItem';
 import ItemSeparator from './ItemSeparator';
@@ -89,21 +90,11 @@ const determineSortVariables = (sortPrinciple) => {
 const RepositoryList = () => {
   const [sortPrinciple, setSortPrinciple] = useState('latest');
   const [searchFilter, setSearchFilter] = useState('');
-  const [debouncedSearchFilter] = useDebounce(searchFilter, 1000);
+  const [debouncedSearchFilter] = useDebounce(searchFilter, 500);
 
-  /// fix order of operations for this sortVariables
-  const sortVariables = determineSortVariables(sortPrinciple);
-
-  const [queryVariables, setQueryVariables] = useState({...sortVariables});
-
-  useEffect(() => {
-    setQueryVariables({
-      ...sortVariables,
-      searchKeyword: debouncedSearchFilter.toLowerCase(),
-    });
-  }, [debouncedSearchFilter]);
-
-  const { repositories } = useRepositories(queryVariables);
+  const { repositories } = useRepositories({
+    searchKeyword: debouncedSearchFilter,
+  });
 
   return (
     <RepositoryListContainer 
@@ -114,6 +105,7 @@ const RepositoryList = () => {
       searchFilter={searchFilter}
     />
   ); 
+  return <Text>DERP</Text>;
 };
 
 export default RepositoryList;

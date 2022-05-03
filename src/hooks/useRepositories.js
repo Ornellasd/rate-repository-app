@@ -3,8 +3,12 @@ import { useQuery } from '@apollo/client';
 
 import { GET_REPOSITORIES } from '../graphql/queries';
 
+let num = 0;
+
 const useRepositories = (queryVariables) => {
   // console.log(queryVariables);
+  num = num + 1;
+  console.log(queryVariables, `called ${num} times`);
 
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
@@ -23,7 +27,7 @@ const useRepositories = (queryVariables) => {
     }
   };
 
-  useEffect(fetchRepositories, [result]);
+  // useEffect(fetchRepositories, [result]);
 
   return { repositories, loading, refetch: fetchRepositories };
 };
