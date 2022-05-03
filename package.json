@@ -45,7 +45,8 @@
     "react-native-web": "0.17.1",
     "react-router-native": "^6.2.1",
     "use-debounce": "^7.0.1",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "expo-screen-orientation": "~4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

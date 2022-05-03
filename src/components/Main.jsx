@@ -8,7 +8,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useBackHandler } from '../hooks/useBackHandler';
 import { navigationRef, navigate } from '../utils/rootNavigation';
 
-
 import RepositoryList from './RepositoryList';
 import SingleRepository from './SingleRepository';
 import CreateReview from './CreateReview';

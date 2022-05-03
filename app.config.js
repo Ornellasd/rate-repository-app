@@ -4,7 +4,6 @@ export default {
   name: 'rate-repository-app',
   slug: 'rate-repository-app',
   version: '1.0.0',
-  orientation: 'portrait',
   icon: './assets/icon.png',
   splash: {
     image: './assets/splash.png',
