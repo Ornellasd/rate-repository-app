@@ -43,10 +43,10 @@ export class RepositoryListContainer extends React.Component {
   };
 
   render() {
-    const { repositories } = this.props;
+    const { data } = this.props;
 
-    const repositoryNodes = repositories
-      ? repositories.edges.map(edge => edge.node)
+    const repositoryNodes = data && data.repositories
+      ? data.repositories.edges.map(edge => edge.node)
       : [];
 
     return (
@@ -98,7 +98,7 @@ const RepositoryList = () => {
 
   return (
     <RepositoryListContainer 
-      repositories={repositories} 
+      data={repositories} 
       sortPrinciple={sortPrinciple} 
       setSortPrinciple={setSortPrinciple}
       setSearchFilter={setSearchFilter}
