@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce/lib';
-import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { FlatList, View, ActivityIndicator } from 'react-native';
 
 import useRepositories from '../hooks/useRepositories';
 
@@ -9,10 +9,6 @@ import RepositoryItemContainer from './RepositoryItem';
 import ItemSeparator from './ItemSeparator';
 import RepoFilter from './RepoFilter';
 import SortPicker from './SortPicker';
-
-const styles = StyleSheet.create({
-
-});
 
 const renderItem = ({ item }) => (
   <View>
@@ -42,10 +38,10 @@ export class RepositoryListContainer extends React.Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { repositories, onEndReach } = this.props;
 
-    const repositoryNodes = data && data.repositories
-      ? data.repositories.edges.map(edge => edge.node)
+    const repositoryNodes = repositories
+      ? repositories.edges.map(edge => edge.node)
       : [];
 
     return (
@@ -54,6 +50,8 @@ export class RepositoryListContainer extends React.Component {
         ItemSeparatorComponent={ItemSeparator}
         renderItem={renderItem}
         ListHeaderComponent={this.renderHeader}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     );
   }
@@ -96,6 +94,8 @@ const RepositoryList = () => {
     searchKeyword: debouncedSearchFilter.toLowerCase(),
   });
 
+  // console.log(repositories);
+
   if(!repositories) {
     return (
       <View style={{ flexGrow: 1, top: '40%' }}>
@@ -104,13 +104,18 @@ const RepositoryList = () => {
     );
   }
 
+  const onEndReach = () => {
+    console.log('You have reached the end of the list');
+  };
+
   return (
     <RepositoryListContainer 
-      data={repositories} 
+      repositories={repositories} 
       sortPrinciple={sortPrinciple} 
       setSortPrinciple={setSortPrinciple}
       setSearchFilter={setSearchFilter}
       searchFilter={searchFilter}
+      onEndReach={onEndReach}
     />
   ); 
 };
