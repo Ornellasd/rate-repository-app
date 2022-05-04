@@ -92,9 +92,16 @@ const RepositoryList = () => {
   const [searchFilter, setSearchFilter] = useState('');
   const [debouncedSearchFilter] = useDebounce(searchFilter, 500);
 
-  const { repositories } = useRepositories({
-    searchKeyword: debouncedSearchFilter,
-  });
+  const [query, setQuery] = useState({});
+
+  useEffect(() => {
+    setQuery({
+      searchKeyword: debouncedSearchFilter,
+      ...determineSortVariables(sortPrinciple),
+    })
+  }, [debouncedSearchFilter, sortPrinciple]);
+
+  const { repositories } = useRepositories({ ...query });
 
   return (
     <RepositoryListContainer 
