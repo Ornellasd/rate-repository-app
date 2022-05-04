@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce/lib';
-import { FlatList, View, StyleSheet, Text } from 'react-native';
+import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
 
 import useRepositories from '../hooks/useRepositories';
 
@@ -95,7 +95,15 @@ const RepositoryList = () => {
     ...determineSortVariables(sortPrinciple),
     searchKeyword: debouncedSearchFilter.toLowerCase(),
   });
-  
+
+  if(!repositories) {
+    return (
+      <View style={{ flexGrow: 1, top: '40%' }}>
+        <ActivityIndicator size="large" color="#00000" />
+      </View>
+    );
+  }
+
   return (
     <RepositoryListContainer 
       data={repositories} 
