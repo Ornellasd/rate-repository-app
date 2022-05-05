@@ -40,10 +40,14 @@ export const GET_CURRENT_USER = gql`
 export const GET_MY_REVIEWS = gql`
   query {
     me {
+      id
       reviews {
         edges {
           node {
             text
+            rating
+            createdAt
+            repositoryId
           }
         }
       }

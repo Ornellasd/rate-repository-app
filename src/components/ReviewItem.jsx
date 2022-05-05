@@ -33,7 +33,8 @@ const ReviewItem = ({ item }) => {
     },
   });
 
-  const { createdAt, text, user, rating } = item.node;
+  const { createdAt, text, user, rating, repositoryId } = item.node;
+  console.log(item.node, 'item dot node');
   const date = new Date(createdAt);
   const formattedDate = date.toLocaleDateString('en-US');
 
@@ -43,7 +44,7 @@ const ReviewItem = ({ item }) => {
         <Text fontWeight="bold" fontSize="subheading" style={styles.rating}>{rating}</Text>
       </View>
       <View style={styles.ratingsInfo}>
-        <Text fontWeight="bold" fontSize="subheading">{user.username}</Text>
+        <Text fontWeight="bold" fontSize="subheading">{user ? user.username : repositoryId}</Text>        
         <Text color="textSecondary">{formattedDate}</Text>
         <Text>{text}</Text>
       </View>
