@@ -1,6 +1,8 @@
 import { View, FlatList, StyleSheet } from 'react-native';
 import { useQuery } from '@apollo/client';
 
+import useReviews from '../hooks/useReviews';
+
 import { GET_REVIEWS } from '../graphql/queries';
 
 import RepositoryItemContainer from './RepositoryItem';
@@ -76,19 +78,14 @@ const ReviewList = ({ repository }) => {
   
   const id = repository.id;
 
-  const { loading, error, data } = useQuery(GET_REVIEWS, {
-    variables: { id, first: 4 },
-    fetchPolicy: 'cache-and-network',
+  const { reviews } = useReviews({
+    id,
+    first: 3,
   });
 
   const onEndReach = () => {
     console.log('You have reached end of the reviews');
   };
-
-  if (loading) return null;
-  if (error) console.log(`ERROR!: ${error}`);
-
-  const reviews = data && data.repository.reviews.edges;
 
   return (
     <FlatList
