@@ -11,14 +11,14 @@ const useRepositories = (variables) => {
   const handleFetchMore = () => {
     const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
 
-    if(!canFetchMore) {
+    if (!canFetchMore) {
       return;
     }
 
     fetchMore({
       variables: {
         after: data.repositories.pageInfo.endCursor,
-        ...variables
+        ...variables,
       },
     });
   };
@@ -26,7 +26,6 @@ const useRepositories = (variables) => {
   return {
     repositories: data?.repositories,
     fetchMore: handleFetchMore,
-    // can i use loading for activity indicator?
     loading,
     ...result,
   };

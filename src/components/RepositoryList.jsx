@@ -88,13 +88,12 @@ const RepositoryList = () => {
   const [sortPrinciple, setSortPrinciple] = useState('latest');
   const [searchFilter, setSearchFilter] = useState('');
   const [debouncedSearchFilter] = useDebounce(searchFilter, 1000);
-
-  const { repositories } = useRepositories({
+  
+  const { repositories, fetchMore } = useRepositories({
+    first: 4,
     ...determineSortVariables(sortPrinciple),
-    searchKeyword: debouncedSearchFilter.toLowerCase(),
+    searchKeyword: debouncedSearchFilter,
   });
-
-  // console.log(repositories);
 
   if(!repositories) {
     return (
@@ -105,7 +104,7 @@ const RepositoryList = () => {
   }
 
   const onEndReach = () => {
-    console.log('You have reached the end of the list');
+    fetchMore();
   };
 
   return (
