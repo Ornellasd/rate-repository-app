@@ -95,6 +95,10 @@ const RepositoryList = () => {
     searchKeyword: debouncedSearchFilter,
   });
 
+  const onEndReach = () => {
+    fetchMore();
+  };
+
   if(!repositories) {
     return (
       <View style={{ flexGrow: 1, top: '40%' }}>
@@ -102,10 +106,6 @@ const RepositoryList = () => {
       </View>
     );
   }
-
-  const onEndReach = () => {
-    fetchMore();
-  };
 
   return (
     <RepositoryListContainer 

@@ -1,9 +1,6 @@
 import { View, FlatList, StyleSheet } from 'react-native';
-import { useQuery } from '@apollo/client';
 
 import useReviews from '../hooks/useReviews';
-
-import { GET_REVIEWS } from '../graphql/queries';
 
 import RepositoryItemContainer from './RepositoryItem';
 import ItemSeparator from './ItemSeparator';
@@ -78,13 +75,13 @@ const ReviewList = ({ repository }) => {
   
   const id = repository.id;
 
-  const { reviews } = useReviews({
+  const { reviews, fetchMore } = useReviews({
     id,
     first: 3,
   });
 
   const onEndReach = () => {
-    console.log('You have reached end of the reviews');
+    fetchMore();
   };
 
   return (
