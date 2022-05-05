@@ -75,15 +75,20 @@ const ReviewList = ({ repository }) => {
   if(!repository) return null;
   
   const id = repository.id;
+
   const { loading, error, data } = useQuery(GET_REVIEWS, {
-    variables: { id },
+    variables: { id, first: 4 },
     fetchPolicy: 'cache-and-network',
   });
+
+  const onEndReach = () => {
+    console.log('You have reached end of the reviews');
+  };
 
   if (loading) return null;
   if (error) console.log(`ERROR!: ${error}`);
 
-  const reviews = data.repository.reviews.edges;
+  const reviews = data && data.repository.reviews.edges;
 
   return (
     <FlatList
@@ -93,6 +98,8 @@ const ReviewList = ({ repository }) => {
       keyExtractor={(item) => item.node.id}
       ListHeaderComponent={() => <RepositoryItemContainer item={repository} showGit={true} />}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

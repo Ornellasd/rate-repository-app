@@ -55,11 +55,11 @@ export const GET_REPOSITORY = gql`
 `;
 
 export const GET_REVIEWS = gql`
-  query Repository($id: ID!){
+  query Repository($id: ID!, $first: Int){
     repository(id: $id) {
       id
       fullName
-      reviews {
+      reviews (first: $first){
         edges {
           node {
             id
