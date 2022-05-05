@@ -11,6 +11,7 @@ import { navigationRef, navigate } from '../utils/rootNavigation';
 import RepositoryList from './RepositoryList';
 import SingleRepository from './SingleRepository';
 import CreateReview from './CreateReview';
+import UserReviews from './UserReviews';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import AppBar from './AppBar';
@@ -49,7 +50,6 @@ const Main = () => {
     return true;
   });
 
-
   return (
     <View style={styles.container}>
       <AppBar />
@@ -76,6 +76,7 @@ const Main = () => {
             <Stack.Screen name="Sign In" component={SignIn} />
             <Stack.Screen name="Sign Up" component={SignUp} />
             <Stack.Screen name="Create a Review" component={CreateReview} />
+            <Stack.Screen name="My Reviews" component={UserReviews} />
           </Stack.Navigator>
         </NavigationContainer>
     </View>

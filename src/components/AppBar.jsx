@@ -50,6 +50,7 @@ const AppBar = ({ navigation }) => {
   const currentUserTabs = () => (
     <>
       <AppBarTab name="Create a Review" />
+      <AppBarTab name="My Reviews"/>
       <AppBarTab name="Sign Out" onPress={signOut}/>
     </>
   );

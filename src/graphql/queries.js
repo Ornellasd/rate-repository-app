@@ -37,6 +37,20 @@ export const GET_CURRENT_USER = gql`
   }
 `;
 
+export const GET_MY_REVIEWS = gql`
+  query {
+    me {
+      reviews {
+        edges {
+          node {
+            text
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_REPOSITORY = gql`
   query Repository($id: ID!){
     repository(id: $id) {
