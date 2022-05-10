@@ -1,21 +1,22 @@
 import { ActivityIndicator, FlatList, View } from 'react-native';
 
-import Text from './Text';
-
 import ItemSeparator from './ItemSeparator';
 import ReviewItem from './ReviewItem';
 
 import { useQuery } from '@apollo/client';
 
 import { GET_CURRENT_USER } from '../graphql/queries';
-import { GET_MY_REVIEWS } from '../graphql/queries';
 
 const renderItem = ({ item }) => (
   <ReviewItem item={item} />
 );
 
 const UserReviews = () => {
-  const { loading, error, data } = useQuery(GET_MY_REVIEWS);
+  const { loading, error, data } = useQuery(GET_CURRENT_USER, {
+    variables: {
+      includeReviews: true,
+    },
+  });
 
   if(error) console.log(`ERROR: ${error.message}`);
   
@@ -39,7 +40,6 @@ const UserReviews = () => {
       />
     );
   }
-
 }
 
 export default UserReviews;

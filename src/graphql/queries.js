@@ -30,18 +30,10 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_CURRENT_USER = gql`
-  query {
+  query getCurrentUser($includeReviews: Boolean = false) {
     me {
       id
-    }
-  }
-`;
-
-export const GET_MY_REVIEWS = gql`
-  query {
-    me {
-      id
-      reviews {
+      reviews @include(if: $includeReviews) {
         edges {
           node {
             id
