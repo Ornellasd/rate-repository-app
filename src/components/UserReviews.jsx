@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 
 import Text from './Text';
 
@@ -15,20 +15,31 @@ const renderItem = ({ item }) => (
 );
 
 const UserReviews = () => {
-  const currentUserReviews = useQuery(GET_MY_REVIEWS);
+  const { loading, error, data } = useQuery(GET_MY_REVIEWS);
 
-  const reviews = currentUserReviews.data.me.reviews.edges;
-
-  // console.log(reviews);
+  if(error) console.log(`ERROR: ${error.message}`);
   
-  // return <Text>Derp</Text>;
-  return (
-    <FlatList
-      data={reviews}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.node.repositoryId}
-    />
-  )
+  if(loading) {
+    return (
+      <View style={{ flexGrow: 1, top: '40%' }}>
+        <ActivityIndicator size="large" color="#00000" />
+      </View>
+    );
+  }
+
+  if(data) {
+    const reviews = data.me.reviews.edges;
+
+    return (
+      <FlatList
+        data={reviews}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.node.repositoryId}
+        ItemSeparatorComponent={ItemSeparator}
+      />
+    );
+  }
+
 }
 
 export default UserReviews;
