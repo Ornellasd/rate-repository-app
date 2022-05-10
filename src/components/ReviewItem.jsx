@@ -47,8 +47,18 @@ const ReviewItem = ({ item, byOwner }) => {
   const date = new Date(createdAt);
   const formattedDate = date.toLocaleDateString('en-US');
 
+  const [mutate, result] = useMutation(DELETE_REVIEW);
+
   const deleteReview = async () => {
-    console.log('deleting review..');
+    try {
+      await mutate({
+        variables: {
+          deleteReviewId: item.node.id,
+        }
+      });
+    } catch(e) {
+      console.log(e);
+    }
   };
 
   const createDeleteButtonAlert = () => {
