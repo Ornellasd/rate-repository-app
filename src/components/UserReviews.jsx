@@ -8,7 +8,7 @@ import { useQuery } from '@apollo/client';
 import { GET_CURRENT_USER } from '../graphql/queries';
 
 const renderItem = ({ item }) => (
-  <ReviewItem item={item} />
+  <ReviewItem item={item} byOwner={true} />
 );
 
 const UserReviews = () => {
