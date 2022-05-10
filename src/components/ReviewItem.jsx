@@ -1,6 +1,7 @@
 import { View, StyleSheet, Pressable } from 'react-native';
 
 import Text from './Text';
+import Button from './Button';
 
 import theme from '../theme';
 
@@ -35,16 +36,6 @@ const ReviewItem = ({ item, byOwner }) => {
       backgroundColor: theme.colors.title,
       paddingBottom: 10,
     },
-    button: {
-      flexGrow: 1,
-      marginHorizontal: 15,
-      paddingHorizontal: 20,
-      height: theme.formFields.height,
-      borderRadius: theme.formFields.borderRadius,
-      backgroundColor: theme.colors.buttonPrimary,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
   });
 
   const { createdAt, text, user, rating, repositoryId } = item.node;
@@ -66,16 +57,8 @@ const ReviewItem = ({ item, byOwner }) => {
       </View>
       {byOwner &&
         <View style={styles.buttonContainer}>
-          <Pressable
-            style={styles.button}
-          >
-            <Text color="title" fontWeight="bold" fontSize="subheading">View Repository</Text>
-          </Pressable>
-          <Pressable
-            style={styles.button}
-          >
-            <Text color="title" fontWeight="bold" fontSize="subheading">Delete Review</Text>
-          </Pressable>
+          <Button text="View repository" backgroundColor="primary" />
+          <Button text="Delete review" backgroundColor="danger" />
         </View>
       }
     </View>
