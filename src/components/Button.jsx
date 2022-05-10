@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },  
 });
 
-const Button = ({ text, backgroundColor }) => {
+const Button = ({ text, backgroundColor, ...props }) => {
   const buttonStyle = [
     styles.button,
     backgroundColor === 'primary' && styles.backgroundColorPrimary,
@@ -32,6 +32,7 @@ const Button = ({ text, backgroundColor }) => {
   return (
     <Pressable
       style={buttonStyle}
+      {...props}
     >
       <Text color="title" fontWeight="bold" fontSize="subheading">
         {text}

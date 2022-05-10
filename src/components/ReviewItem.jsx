@@ -1,5 +1,7 @@
 import { View, StyleSheet, Pressable } from 'react-native';
 
+import * as RootNavigation from '../utils/rootNavigation';
+
 import Text from './Text';
 import Button from './Button';
 
@@ -38,7 +40,7 @@ const ReviewItem = ({ item, byOwner }) => {
     },
   });
 
-  const { createdAt, text, user, rating, repositoryId } = item.node;
+  const { createdAt, text, user, rating } = item.node;
   const date = new Date(createdAt);
   const formattedDate = date.toLocaleDateString('en-US');
 
@@ -57,7 +59,15 @@ const ReviewItem = ({ item, byOwner }) => {
       </View>
       {byOwner &&
         <View style={styles.buttonContainer}>
-          <Button text="View repository" backgroundColor="primary" />
+          <Button 
+            text="View repository" 
+            backgroundColor="primary" 
+            onPress={() => {
+              RootNavigation.navigate('Repository', {
+                itemId: item.node.repository.id,
+              });
+            }}
+            />
           <Button text="Delete review" backgroundColor="danger" />
         </View>
       }
