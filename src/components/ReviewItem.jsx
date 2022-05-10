@@ -1,11 +1,14 @@
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 
 import * as RootNavigation from '../utils/rootNavigation';
+
+import { DELETE_REVIEW } from '../graphql/mutations';
 
 import Text from './Text';
 import Button from './Button';
 
 import theme from '../theme';
+import { useMutation } from '@apollo/client';
 
 const ReviewItem = ({ item, byOwner }) => {
   const styles = StyleSheet.create({
@@ -44,6 +47,24 @@ const ReviewItem = ({ item, byOwner }) => {
   const date = new Date(createdAt);
   const formattedDate = date.toLocaleDateString('en-US');
 
+  const deleteReview = async () => {
+    console.log('deleting review..');
+  };
+
+  const createDeleteButtonAlert = () => {
+    Alert.alert(
+      'Delete review',
+      'Are you sure you want to delete this review?',
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        { text: "Delete", onPress: () => deleteReview() }
+      ]
+    );
+  };
+
   return (
     <View style={styles.outerContainer}>
       <View style={styles.itemContainer}>
@@ -68,7 +89,10 @@ const ReviewItem = ({ item, byOwner }) => {
               });
             }}
             />
-          <Button text="Delete review" backgroundColor="danger" />
+          <Button text="Delete review"
+            backgroundColor="danger" 
+            onPress={createDeleteButtonAlert}
+          />
         </View>
       }
     </View>
