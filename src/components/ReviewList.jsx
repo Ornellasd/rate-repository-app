@@ -33,7 +33,7 @@ const ReviewList = ({ repository }) => {
 
   const { reviews, fetchMore } = useReviews({
     id,
-    first: 3,
+    first: 5,
   });
 
   const onEndReach = () => {

@@ -1,65 +1,63 @@
 import { View, StyleSheet, Alert } from 'react-native';
+import { useMutation } from '@apollo/client';
 
 import * as RootNavigation from '../utils/rootNavigation';
 
 import { DELETE_REVIEW } from '../graphql/mutations';
+import { GET_CURRENT_USER } from '../graphql/queries';
 
 import Text from './Text';
 import Button from './Button';
 
 import theme from '../theme';
-import { useMutation } from '@apollo/client';
+
+const styles = StyleSheet.create({
+  itemContainer: {
+    display: 'flex',
+    backgroundColor: '#fff',
+    padding: 10,
+    flexDirection: 'row',
+  },
+  ratingBorder: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+  },
+  rating: {
+    color: theme.colors.primary,
+  },
+  ratingsInfo: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: theme.colors.title,
+    paddingBottom: 10,
+  },
+});
 
 const ReviewItem = ({ item, byOwner }) => {
-  const styles = StyleSheet.create({
-    itemContainer: {
-      display: 'flex',
-      backgroundColor: '#fff',
-      padding: 10,
-      flexDirection: 'row',
-    },
-    ratingBorder: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 2,
-      borderColor: theme.colors.primary,
-      width: 60,
-      height: 60,
-      borderRadius: 30,
-    },
-    rating: {
-      color: theme.colors.primary,
-    },
-    ratingsInfo: {
-      flex: 1,
-      marginLeft: 10,
-    },
-    buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      backgroundColor: theme.colors.title,
-      paddingBottom: 10,
-    },
-  });
-
   const { createdAt, text, user, rating } = item.node;
   const date = new Date(createdAt);
   const formattedDate = date.toLocaleDateString('en-US');
 
-  const [mutate, result] = useMutation(DELETE_REVIEW);
+  const [deleteReview, { data, loading, error }] = useMutation(DELETE_REVIEW, {
+    refetchQueries: [{
+      query:  GET_CURRENT_USER,
+      variables: {
+        includeReviews: true,
+      },
+    }]
+  });
 
-  const deleteReview = async () => {
-    try {
-      await mutate({
-        variables: {
-          deleteReviewId: item.node.id,
-        }
-      });
-    } catch(e) {
-      console.log(e);
-    }
-  };
+  if(error) console.log(error.message);
 
   const createDeleteButtonAlert = () => {
     Alert.alert(
@@ -70,7 +68,7 @@ const ReviewItem = ({ item, byOwner }) => {
           text: "Cancel",
           style: "cancel"
         },
-        { text: "Delete", onPress: () => deleteReview() }
+        { text: "Delete", onPress: () => deleteReview({ variables: { deleteReviewId: item.node.id } }) }
       ]
     );
   };
@@ -106,7 +104,7 @@ const ReviewItem = ({ item, byOwner }) => {
         </View>
       }
     </View>
-  )
+  );
 };
 
 export default ReviewItem;

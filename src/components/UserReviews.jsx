@@ -16,6 +16,7 @@ const UserReviews = () => {
     variables: {
       includeReviews: true,
     },
+    fetchPolicy: 'cache-and-network',
   });
 
   if(error) console.log(`ERROR: ${error.message}`);
