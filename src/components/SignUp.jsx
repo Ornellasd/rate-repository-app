@@ -3,11 +3,9 @@ import { useNavigate } from 'react-router-native';
 import { Formik } from 'formik';
 import { useMutation } from '@apollo/client';
 import * as yup from 'yup';
-
 import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 import theme from '../theme';
-
 import { CREATE_USER } from '../graphql/mutations';
 
 const styles = StyleSheet.create({
@@ -77,7 +75,7 @@ const SignUpContainer = ({ onSubmit }) => {
 };
 
 const SignUp = () => {
-  const [mutate, result] = useMutation(CREATE_USER);
+  const [mutate] = useMutation(CREATE_USER);
   const navigate = useNavigate();
 
   const onSubmit = async (values) => {

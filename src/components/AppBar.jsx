@@ -1,14 +1,11 @@
-import { View, StyleSheet, ScrollView, Pressable, Button } from 'react-native';
-import { Link } from 'react-router-native';
+import { useContext } from 'react';
+import { View, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useApolloClient, useQuery } from '@apollo/client';
 import Constants from 'expo-constants';
-
 import { GET_CURRENT_USER } from '../graphql/queries';
 import AuthStorageContext from '../contexts/AuthStorageContext';
 import * as RootNavigation from '../utils/rootNavigation';
-
 import Text from './Text';
-import { useContext } from 'react';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,8 +33,7 @@ const AppBarTab = ({ name, onPress }) => (
   </Pressable>
 );
 
-
-const AppBar = ({ navigation }) => {
+const AppBar = () => {
   const apolloClient = useApolloClient();
   const authStorage = useContext(AuthStorageContext);
   const currentUser = useQuery(GET_CURRENT_USER);

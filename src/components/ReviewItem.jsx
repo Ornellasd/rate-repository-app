@@ -1,14 +1,10 @@
 import { View, StyleSheet, Alert } from 'react-native';
 import { useMutation } from '@apollo/client';
-
 import * as RootNavigation from '../utils/rootNavigation';
-
 import { DELETE_REVIEW } from '../graphql/mutations';
 import { GET_CURRENT_USER } from '../graphql/queries';
-
 import Text from './Text';
 import Button from './Button';
-
 import theme from '../theme';
 
 const styles = StyleSheet.create({
@@ -48,7 +44,7 @@ const ReviewItem = ({ item, byOwner }) => {
   const date = new Date(createdAt);
   const formattedDate = date.toLocaleDateString('en-US');
 
-  const [deleteReview, { data, loading, error }] = useMutation(DELETE_REVIEW, {
+  const [deleteReview, { error }] = useMutation(DELETE_REVIEW, {
     refetchQueries: [{
       query:  GET_CURRENT_USER,
       variables: {
@@ -74,7 +70,7 @@ const ReviewItem = ({ item, byOwner }) => {
   };
 
   return (
-    <View style={styles.outerContainer}>
+    <View>
       <View style={styles.itemContainer}>
         <View style={styles.ratingBorder}>
           <Text fontWeight="bold" fontSize="subheading" style={styles.rating}>{rating}</Text>

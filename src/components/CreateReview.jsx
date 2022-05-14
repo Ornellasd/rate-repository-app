@@ -2,9 +2,7 @@ import { View, Pressable , StyleSheet} from 'react-native';
 import { useNavigate } from 'react-router-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-
 import useCreateReview from '../hooks/useCreateReview';
-
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
 import theme from '../theme';
@@ -23,7 +21,6 @@ const styles = StyleSheet.create({
     height: theme.formFields.height,
     alignItems: 'center',
     justifyContent: 'center',
-    // height
   }
 });
 

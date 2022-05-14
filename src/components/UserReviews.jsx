@@ -1,10 +1,7 @@
 import { ActivityIndicator, FlatList, View } from 'react-native';
-
 import ItemSeparator from './ItemSeparator';
 import ReviewItem from './ReviewItem';
-
 import { useQuery } from '@apollo/client';
-
 import { GET_CURRENT_USER } from '../graphql/queries';
 
 const renderItem = ({ item }) => (

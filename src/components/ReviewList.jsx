@@ -1,15 +1,11 @@
 import { FlatList, StyleSheet } from 'react-native';
-
 import useReviews from '../hooks/useReviews';
-
 import RepositoryItemContainer from './RepositoryItem';
 import ReviewItem from './ReviewItem';
 import ItemSeparator from './ItemSeparator';
-
 import theme from '../theme';
 
 const styles = StyleSheet.create({
-  //REFACTOR BUTTON STYLES TO THEME FILE
   button: {
     height: theme.formFields.height,
     borderRadius: theme.formFields.borderRadius,
@@ -17,9 +13,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  flatlistContainer: {
-    // paddingBottom: 350
-  }
 });
 
 const renderItem = ({ item }) => (

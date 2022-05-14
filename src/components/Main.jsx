@@ -1,13 +1,9 @@
 import React from'react';
-
 import { StyleSheet, View, BackHandler, Alert } from 'react-native';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import { useBackHandler } from '../hooks/useBackHandler';
 import { navigationRef, navigate } from '../utils/rootNavigation';
-
 import RepositoryList from './RepositoryList';
 import SingleRepository from './SingleRepository';
 import CreateReview from './CreateReview';

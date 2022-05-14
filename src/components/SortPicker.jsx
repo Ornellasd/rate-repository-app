@@ -8,7 +8,7 @@ const SortPicker = ({ sortPrinciple, setSortPrinciple }) => {
   return (
     <Picker
       selectedValue={sortPrinciple}
-      onValueChange={(itemValue, itemIndex) =>
+      onValueChange={(itemValue) =>
         handlesetSortPrinciple(itemValue)
     }>
       <Picker.Item label="Latest repositories" value="latest" />

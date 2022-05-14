@@ -1,11 +1,8 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import { Formik, useField } from 'formik';
+import { Formik } from 'formik';
 import * as yup from 'yup';
-
 import * as RootNavigation from '../utils/rootNavigation';
-
 import useSignIn from '../hooks/useSignIn';
-
 import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 import theme from '../theme';
@@ -14,7 +11,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.title,
     height: 230,
-    // padding: 10,
     paddingVertical: theme.formFields.paddingVertical,
     paddingHorizontal: theme.formFields.paddingHorizontal,
     justifyContent: 'space-between'
@@ -67,7 +63,6 @@ const SignIn = () => {
 
     try {
       await signIn({ username, password });
-      // navigate('/');
       RootNavigation.navigate('Repositories');
     } catch (e) {
       console.log(e);
@@ -75,7 +70,6 @@ const SignIn = () => {
   };
 
   return <SignInContainer onSubmit={onSubmit} />;
-
 };
 
 export const SignInContainer = ({ onSubmit }) => {

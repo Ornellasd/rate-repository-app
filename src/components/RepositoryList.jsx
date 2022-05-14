@@ -1,10 +1,8 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDebounce } from 'use-debounce/lib';
 import { FlatList, View, ActivityIndicator } from 'react-native';
-
 import useRepositories from '../hooks/useRepositories';
-
 import RepositoryItemContainer from './RepositoryItem';
 import ItemSeparator from './ItemSeparator';
 import RepoFilter from './RepoFilter';
@@ -79,7 +77,7 @@ const determineSortVariables = (sortPrinciple) => {
         orderDirection: 'ASC'
       };
       break;
-  };
+  }
 
   return sortVariables;
 };

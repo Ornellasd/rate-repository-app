@@ -8,6 +8,8 @@ const useReviews = (variables) => {
     fetchPolicy: 'cache-and-network',
   });
 
+  if(error) console.log(error.message);
+
   const handleFetchMore = () => {
     const canFetchMore = !loading && data?.repository.reviews.pageInfo.hasNextPage;
     

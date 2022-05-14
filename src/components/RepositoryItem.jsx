@@ -1,13 +1,9 @@
 import { View, StyleSheet, Pressable } from 'react-native';
-import { useNavigate } from 'react-router-native';
 import * as Linking from 'expo-linking';
-
 import * as RootNavigation from '../utils/rootNavigation';
-
 import RepositoryMetrics from './RepositoryMetrics';
 import RepositoryInfo from './RepositoryInfo';
 import Text from './Text';
-
 import theme from '../theme';
 
 const styles = StyleSheet.create({
@@ -22,7 +18,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.buttonPrimary,
     alignItems: 'center',
     justifyContent: 'center',
-    //// new styles /////
     marginTop: 10,
   },
   separator: {
@@ -45,28 +40,23 @@ const GithubButton = ({ url }) => (
   </Pressable>
 );
 
-const RepositoryItem = ({ item, showGit }) => {
-  // const navigate = useNavigate();
-  
-  return (
-    <Pressable
-      // onPress={() => navigate(`/repository/${item.id}`)}
-      onPress={() => {
-        RootNavigation.navigate('Repository', {
-          itemId: item.id
-        })
-      }}
-    >
-      <View>
-        <View style={styles.itemContainer}>
-          <RepositoryInfo item={item} />
-          <RepositoryMetrics item={item} />
-          {showGit && <GithubButton url={item.url} />}
-        </View>
-        {showGit && <View style={styles.separator} />}
+const RepositoryItem = ({ item, showGit }) => (  
+  <Pressable
+    onPress={() => {
+      RootNavigation.navigate('Repository', {
+        itemId: item.id
+      })
+    }}
+  >
+    <View>
+      <View style={styles.itemContainer}>
+        <RepositoryInfo item={item} />
+        <RepositoryMetrics item={item} />
+        {showGit && <GithubButton url={item.url} />}
       </View>
-    </Pressable>
-   );
-};
+      {showGit && <View style={styles.separator} />}
+    </View>
+  </Pressable>
+);
 
 export default RepositoryItem;

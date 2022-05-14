@@ -1,7 +1,3 @@
-import Text from './Text';
-
-import { useParams } from 'react-router-native';
-
 import useRepository from '../hooks/useRepository';
 
 import ReviewList from './ReviewList';
