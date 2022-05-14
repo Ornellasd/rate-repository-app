@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   error: {
+    // absolute positioning here to match where formik text input error would go
     position: 'absolute',
-    color: theme.colors.errorColor,
     left: 10,
     bottom: 72,
   },
@@ -88,7 +88,6 @@ const SignIn = () => {
       await signIn({ username, password });
       RootNavigation.navigate('Repositories');
     } catch (e) {
-      // console.log(e);
       setError(e.message);
     }
   };
