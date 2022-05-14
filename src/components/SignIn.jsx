@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -10,7 +11,7 @@ import theme from '../theme';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.title,
-    height: 230,
+    height: 250,
     paddingVertical: theme.formFields.paddingVertical,
     paddingHorizontal: theme.formFields.paddingHorizontal,
     justifyContent: 'space-between'
@@ -21,27 +22,19 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.buttonPrimary,
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
+  error: {
+    position: 'absolute',
+    color: theme.colors.errorColor,
+    left: 10,
+    bottom: 72,
+  },
 });
 
 const initialValues = {
   username: '',
   password: '',
 };
-
-const SignInForm = ({ onSubmit }) => (
-  <View style={styles.container}>
-    <FormikTextInput name="username" placeholder="Username" />
-    <FormikTextInput name="password" placeholder="Password" secureTextEntry />
-    <Pressable 
-      style={styles.button} 
-      onPress={onSubmit}
-      testID="submitBtn"
-    >
-      <Text color="title" fontWeight="bold" fontSize="subheading">Sign In</Text>
-    </Pressable>
-  </View>
-);
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -54,8 +47,38 @@ const validationSchema = yup.object().shape({
     .required('Password is required.')
 });
 
+const SignInForm = ({ onSubmit, signInError }) => (
+  <View style={styles.container}>
+    <FormikTextInput name="username" placeholder="Username" />
+    <FormikTextInput name="password" placeholder="Password" secureTextEntry />
+    {signInError &&
+      <Text style={styles.error}>{signInError}</Text>
+    }
+    <Pressable 
+      style={styles.button} 
+      onPress={onSubmit}
+      testID="submitBtn"
+    >
+      <Text color="title" fontWeight="bold" fontSize="subheading">Sign In</Text>
+    </Pressable>
+  </View>
+);
+
+export const SignInContainer = ({ onSubmit, signInError }) => {
+  return (
+    <Formik 
+      initialValues={initialValues} 
+      onSubmit={onSubmit}
+      validationSchema={validationSchema}
+    >
+      {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} signInError={signInError} />}
+    </Formik>
+  );
+};
+
 const SignIn = () => {
   const [signIn] = useSignIn();
+  const [error, setError] = useState();
 
   const onSubmit = async (values) => {
     const username = values.username;
@@ -65,23 +88,12 @@ const SignIn = () => {
       await signIn({ username, password });
       RootNavigation.navigate('Repositories');
     } catch (e) {
-      console.log(e);
+      // console.log(e);
+      setError(e.message);
     }
   };
 
-  return <SignInContainer onSubmit={onSubmit} />;
-};
-
-export const SignInContainer = ({ onSubmit }) => {
-  return (
-    <Formik 
-      initialValues={initialValues} 
-      onSubmit={onSubmit}
-      validationSchema={validationSchema}
-    >
-      {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
-    </Formik>
-  );
+  return <SignInContainer onSubmit={onSubmit} signInError={error} />;
 };
 
 export default SignIn;
