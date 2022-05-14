@@ -11,7 +11,7 @@ import theme from '../theme';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.title,
-    height: 250,
+    height: 230,
     paddingVertical: theme.formFields.paddingVertical,
     paddingHorizontal: theme.formFields.paddingHorizontal,
     justifyContent: 'space-between'
@@ -25,9 +25,10 @@ const styles = StyleSheet.create({
   },
   error: {
     // absolute positioning here to match where formik text input error would go
+    color: theme.colors.errorColor,
     position: 'absolute',
     left: 10,
-    bottom: 72,
+    bottom: 68,
   },
 });
 
