@@ -97,6 +97,7 @@ const RepositoryList = () => {
     fetchMore();
   };
 
+  // using loading from useRepositories hooks makes it load twice for some reason
   if(!repositories) {
     return (
       <View style={{ flexGrow: 1, top: '40%' }}>

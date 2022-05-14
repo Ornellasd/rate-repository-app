@@ -39,6 +39,7 @@ const AppBar = () => {
   const currentUser = useQuery(GET_CURRENT_USER);
 
   const signOut = async () => {
+    RootNavigation.navigate('Repositories');
     await authStorage.removeAccessToken();
     apolloClient.resetStore();
   };
