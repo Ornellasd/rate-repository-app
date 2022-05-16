@@ -6,12 +6,14 @@ import theme from '../theme';
 const styles = StyleSheet.create({
   button: {
     flexGrow: 1,
-    marginHorizontal: 15,
-    paddingHorizontal: 20,
     height: theme.formFields.height,
     borderRadius: theme.formFields.borderRadius,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  halfButton: {
+    marginHorizontal: 15,
+    paddingHorizontal: 20,
   },
   backgroundColorPrimary: {
     backgroundColor: theme.colors.buttonPrimary,
@@ -21,11 +23,13 @@ const styles = StyleSheet.create({
   },  
 });
 
-const Button = ({ text, backgroundColor, route, ...props }) => {
+const Button = ({ text, backgroundColor, halfButton, route, style, ...props }) => {
   const buttonStyle = [
-    styles.button,
     backgroundColor === 'primary' && styles.backgroundColorPrimary,
     backgroundColor === 'danger' && styles.backgroundColorDanger,
+    halfButton && styles.halfButton,
+    styles.button,
+    style,
   ];
 
   const handlePress = () => {
@@ -36,7 +40,7 @@ const Button = ({ text, backgroundColor, route, ...props }) => {
 
   return (
     <Pressable
-      onPress={handlePress}
+      onPress={route && handlePress}
       style={({ pressed }) => [
         buttonStyle,
         { opacity: pressed ? 0.5 : 1},

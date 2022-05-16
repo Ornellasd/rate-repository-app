@@ -4,6 +4,7 @@ import * as RootNavigation from '../utils/rootNavigation';
 import RepositoryMetrics from './RepositoryMetrics';
 import RepositoryInfo from './RepositoryInfo';
 import Text from './Text';
+import Button from './Button';
 import theme from '../theme';
 
 const styles = StyleSheet.create({
@@ -13,32 +14,12 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   button: {
-    height: theme.formFields.height,
-    borderRadius: theme.formFields.borderRadius,
-    backgroundColor: theme.colors.buttonPrimary,
-    alignItems: 'center',
-    justifyContent: 'center',
     marginTop: 10,
   },
   separator: {
     height: 8,
   }
 });
-
-const GithubButton = ({ url }) => (
-  <Pressable
-    style={styles.button}
-    onPress={() => Linking.openURL(url)} 
-  >
-    <Text
-      color="title"
-      fontWeight="bold"
-      fontSize="subheading"
-    >
-      Open in GitHub
-    </Text>
-  </Pressable>
-);
 
 const RepositoryItem = ({ item, showGit }) => (  
   <Pressable
@@ -52,7 +33,13 @@ const RepositoryItem = ({ item, showGit }) => (
       <View style={styles.itemContainer}>
         <RepositoryInfo item={item} />
         <RepositoryMetrics item={item} />
-        {showGit && <GithubButton url={item.url} />}
+        {showGit &&
+          <Button 
+            text="Open in Github"
+            backgroundColor="primary" 
+            style={styles.button}
+          />
+        }
       </View>
       {showGit && <View style={styles.separator} />}
     </View>

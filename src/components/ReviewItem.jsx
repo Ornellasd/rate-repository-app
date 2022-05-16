@@ -87,10 +87,12 @@ const ReviewItem = ({ item, byOwner }) => {
             text="View repository" 
             backgroundColor="primary"
             route={{ screen: 'Repository', id: item.node.repository.id }}
+            halfButton={true}
           />
           <Button text="Delete review"
             backgroundColor="danger" 
             onPress={createDeleteButtonAlert}
+            halfButton={true}
           />
         </View>
       }
