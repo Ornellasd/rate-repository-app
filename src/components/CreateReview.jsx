@@ -1,9 +1,8 @@
 import { View, Pressable , StyleSheet} from 'react-native';
-import { useNavigate } from 'react-router-native';
 import { Formik } from 'formik';
+import * as RootNavigation from '../utils/rootNavigation';
 import * as yup from 'yup';
 import useCreateReview from '../hooks/useCreateReview';
-import Text from './Text';
 import Button from './Button';
 import FormikTextInput from './FormikTextInput';
 import theme from '../theme';
@@ -67,12 +66,13 @@ const CreateReviewForm = ({ onSubmit }) => {
 
 const CreateReview = () => {
   const [createReview] = useCreateReview();
-  const navigate = useNavigate();
 
   const onSubmit = async (values) => {
     try {
       const { data } = await createReview({ ...values });
-      navigate(`/repository/${data.createReview.repositoryId}`);
+      RootNavigation.navigate('Repository', {
+        itemId: data.createReview.repositoryId,
+      });
     } catch(e) {
       console.log(e);
     }
