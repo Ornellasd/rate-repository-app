@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import * as RootNavigation from '../utils/rootNavigation';
 import useSignIn from '../hooks/useSignIn';
 import FormikTextInput from './FormikTextInput';
+import Button from './Button';
 import Text from './Text';
 import theme from '../theme';
 
@@ -55,13 +56,11 @@ const SignInForm = ({ onSubmit, signInError }) => (
     {signInError &&
       <Text style={styles.error}>{signInError}</Text>
     }
-    <Pressable 
-      style={styles.button} 
+    <Button 
+      text="Sign In"
+      backgroundColor="primary"
       onPress={onSubmit}
-      testID="submitBtn"
-    >
-      <Text color="title" fontWeight="bold" fontSize="subheading">Sign In</Text>
-    </Pressable>
+    />
   </View>
 );
 
