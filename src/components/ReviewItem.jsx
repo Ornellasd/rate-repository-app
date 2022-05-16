@@ -1,6 +1,5 @@
 import { View, StyleSheet, Alert } from 'react-native';
 import { useMutation } from '@apollo/client';
-import * as RootNavigation from '../utils/rootNavigation';
 import { DELETE_REVIEW } from '../graphql/mutations';
 import { GET_CURRENT_USER } from '../graphql/queries';
 import Text from './Text';
@@ -86,13 +85,9 @@ const ReviewItem = ({ item, byOwner }) => {
         <View style={styles.buttonContainer}>
           <Button 
             text="View repository" 
-            backgroundColor="primary" 
-            onPress={() => {
-              RootNavigation.navigate('Repository', {
-                itemId: item.node.repository.id,
-              });
-            }}
-            />
+            backgroundColor="primary"
+            route={{ screen: 'Repository', id: item.node.repository.id }}
+          />
           <Button text="Delete review"
             backgroundColor="danger" 
             onPress={createDeleteButtonAlert}
