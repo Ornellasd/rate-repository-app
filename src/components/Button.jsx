@@ -5,15 +5,14 @@ import theme from '../theme';
 
 const styles = StyleSheet.create({
   button: {
-    flexGrow: 1,
     height: theme.formFields.height,
     borderRadius: theme.formFields.borderRadius,
     alignItems: 'center',
     justifyContent: 'center',
   },
   halfButton: {
-    marginHorizontal: 15,
-    paddingHorizontal: 20,
+    flexGrow: 1,
+    marginHorizontal: 10,
   },
   backgroundColorPrimary: {
     backgroundColor: theme.colors.buttonPrimary,

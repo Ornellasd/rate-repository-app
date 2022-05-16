@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import useCreateReview from '../hooks/useCreateReview';
 import Text from './Text';
+import Button from './Button';
 import FormikTextInput from './FormikTextInput';
 import theme from '../theme';
 
@@ -55,13 +56,11 @@ const CreateReviewForm = ({ onSubmit }) => {
       <FormikTextInput name="repositoryName" placeholder="Repository name" />
       <FormikTextInput name="rating" placeholder="Rating between 0 and 100" />
       <FormikTextInput name="text" placeholder="Review" />
-
-      <Pressable 
+      <Button
+        text="Submit Review"
+        backgroundColor="primary"
         onPress={onSubmit}
-        style={styles.button}
-      >
-        <Text color="title" fontWeight="bold" fontSize="subheading">Submit Review</Text>
-      </Pressable>
+      />
     </View>
   );
 };
