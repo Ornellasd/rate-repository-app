@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client';
 import * as yup from 'yup';
 import FormikTextInput from './FormikTextInput';
 import Text from './Text';
+import Button from './Button';
 import theme from '../theme';
 import { CREATE_USER } from '../graphql/mutations';
 import * as RootNavigation from '../utils/rootNavigation';
@@ -53,12 +54,11 @@ const SignUpForm = ({ onSubmit }) => (
     <FormikTextInput name="username" placeholder="Username" />
     <FormikTextInput name="password" type="password" placeholder="Password" secureTextEntry />
     <FormikTextInput name="passwordConfirm" placeholder="Password confirmation" secureTextEntry />
-    <Pressable 
+    <Button 
+      text="Sign Up"
+      backgroundColor="primary"
       onPress={onSubmit}
-      style={styles.button}
-    >
-      <Text color="title" fontWeight="bold" fontSize="subheading">Sign Up</Text>
-    </Pressable>
+    />
   </View>
 );
 
