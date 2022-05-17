@@ -4,8 +4,10 @@ Rate Repository App is a GitHub project rating app built in React Native as a so
 
 ### Screenshots
 <div>
-  <img src="./screenshots/Screenshot_20220516-214853_Expo Go.jpg" width="300" style="margin-right: 5 rem" />
+  <img src="./screenshots/Screenshot_20220516-214853_Expo Go.jpg" width="300" />
+  &nbsp;
   <img src="./screenshots/Screenshot_20220516-214936_Expo Go.jpg" width="300" />
+  &nbsp;
   <img src="./screenshots/Screenshot_20220516-214947_Expo Go.jpg" width="300" />
 </div>
 
