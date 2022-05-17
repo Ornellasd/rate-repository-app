@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Pressable , StyleSheet} from 'react-native';
+import { View, StyleSheet} from 'react-native';
 import { Formik } from 'formik';
 import * as RootNavigation from '../utils/rootNavigation';
 import * as yup from 'yup';

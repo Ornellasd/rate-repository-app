@@ -1,9 +1,8 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Formik } from 'formik';
 import { useMutation } from '@apollo/client';
 import * as yup from 'yup';
 import FormikTextInput from './FormikTextInput';
-import Text from './Text';
 import Button from './Button';
 import theme from '../theme';
 import { CREATE_USER } from '../graphql/mutations';

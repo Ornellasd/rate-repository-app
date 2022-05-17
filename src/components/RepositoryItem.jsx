@@ -1,11 +1,8 @@
 import { View, StyleSheet, Pressable } from 'react-native';
-import * as Linking from 'expo-linking';
 import * as RootNavigation from '../utils/rootNavigation';
 import RepositoryMetrics from './RepositoryMetrics';
 import RepositoryInfo from './RepositoryInfo';
-import Text from './Text';
 import Button from './Button';
-import theme from '../theme';
 
 const styles = StyleSheet.create({
   itemContainer: {
