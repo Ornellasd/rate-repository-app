@@ -3,7 +3,11 @@
 Rate Repository App is a GitHub project rating app built as solution for part 10 of the Full Stack Open [curriculum](https://fullstackopen.com/en/part10).
 
 ### Screenshots
-![](./screenshots/Screenshot_20220516-214853_Expo Go.jpg)
+<div>
+  <img src="./screenshots/Screenshot_20220516-214853_Expo Go.jpg" width="300" style="margin-right: 5 rem" />
+  <img src="./screenshots/Screenshot_20220516-214936_Expo Go.jpg" width="300" />
+  <img src="./screenshots/Screenshot_20220516-214947_Expo Go.jpg" width="300" />
+</div>
 
 ### Built with
 
