@@ -48,10 +48,10 @@ const validationSchema = yup.object().shape({
     .required('Password is required.')
 });
 
-const SignInForm = ({ onSubmit, signInError }) => (
+const SignInForm = ({ onSubmit, signInError, setError }) => (
   <View style={styles.container}>
-    <FormikTextInput name="username" placeholder="Username" />
-    <FormikTextInput name="password" placeholder="Password" secureTextEntry />
+    <FormikTextInput name="username" placeholder="Username"  onChange={() => setError() } />
+    <FormikTextInput name="password" placeholder="Password" onChange={() => setError() } secureTextEntry />
     {signInError &&
       <Text color="error" style={styles.error}>{signInError}</Text>
     }
@@ -63,14 +63,14 @@ const SignInForm = ({ onSubmit, signInError }) => (
   </View>
 );
 
-export const SignInContainer = ({ onSubmit, signInError }) => {
+export const SignInContainer = ({ onSubmit, signInError, setError }) => {
   return (
     <Formik 
       initialValues={initialValues} 
       onSubmit={onSubmit}
       validationSchema={validationSchema}
     >
-      {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} signInError={signInError} />}
+      {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} signInError={signInError} setError={setError} />}
     </Formik>
   );
 };
@@ -91,7 +91,7 @@ const SignIn = () => {
     }
   };
 
-  return <SignInContainer onSubmit={onSubmit} signInError={error} />;
+  return <SignInContainer onSubmit={onSubmit} signInError={error} setError={setError} />;
 };
 
 export default SignIn;
