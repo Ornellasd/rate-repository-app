@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
   },
   error: {
     // absolute positioning here to match where formik text input error would go
-    color: theme.colors.errorColor,
     position: 'absolute',
     left: 10,
     bottom: 68,
@@ -54,7 +53,7 @@ const SignInForm = ({ onSubmit, signInError }) => (
     <FormikTextInput name="username" placeholder="Username" />
     <FormikTextInput name="password" placeholder="Password" secureTextEntry />
     {signInError &&
-      <Text style={styles.error}>{signInError}</Text>
+      <Text color="error" style={styles.error}>{signInError}</Text>
     }
     <Button 
       text="Sign In"
