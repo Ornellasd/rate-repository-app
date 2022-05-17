@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View, Pressable , StyleSheet} from 'react-native';
 import { Formik } from 'formik';
 import * as RootNavigation from '../utils/rootNavigation';
@@ -5,6 +6,7 @@ import * as yup from 'yup';
 import useCreateReview from '../hooks/useCreateReview';
 import Button from './Button';
 import FormikTextInput from './FormikTextInput';
+import Text from './Text';
 import theme from '../theme';
 
 const styles = StyleSheet.create({
@@ -12,7 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.title,
     paddingVertical: theme.formFields.paddingVertical,
     paddingHorizontal: theme.formFields.paddingHorizontal,
-    height: 390,
+    height: 420,
     justifyContent: 'space-between'
   },
   button: {
@@ -21,7 +23,13 @@ const styles = StyleSheet.create({
     height: theme.formFields.height,
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+  error: {
+    // absolute positioning here to match where formik text input error would go
+    position: 'absolute',
+    left: 10,
+    bottom: 73,
+  },
 });
 
 const initialValues = {
@@ -48,14 +56,18 @@ const validationSchema = yup.object().shape({
     .nullable()
 });
 
-const CreateReviewForm = ({ onSubmit }) => {
+const CreateReviewForm = ({ onSubmit, postError }) => {
   return (
     <View style={styles.container}>
       <FormikTextInput name="ownerName" placeholder="Repository owner name" />
       <FormikTextInput name="repositoryName" placeholder="Repository name" />
       <FormikTextInput name="rating" placeholder="Rating between 0 and 100" />
       <FormikTextInput name="text" placeholder="Review" />
+      {postError &&
+        <Text style={styles.error} color="error">{postError}</Text>
+      }
       <Button
+        style={{ marginTop: 20 }}
         text="Submit Review"
         backgroundColor="primary"
         onPress={onSubmit}
@@ -64,8 +76,19 @@ const CreateReviewForm = ({ onSubmit }) => {
   );
 };
 
+const CreateReviewContainer = ({ onSubmit, postError }) => (
+  <Formik
+    initialValues={initialValues}
+    onSubmit={onSubmit}
+    validationSchema={validationSchema}
+  >
+    {({ handleSubmit }) => <CreateReviewForm onSubmit={handleSubmit} postError={postError} />}
+  </Formik>
+);
+
 const CreateReview = () => {
   const [createReview] = useCreateReview();
+  const [error, setError] = useState();
 
   const onSubmit = async (values) => {
     try {
@@ -74,21 +97,11 @@ const CreateReview = () => {
         itemId: data.createReview.repositoryId,
       });
     } catch(e) {
-      console.log(e);
+      setError(e.message);
     }
   };
 
-  return <CreateReviewContainer onSubmit={onSubmit} />;
+  return <CreateReviewContainer onSubmit={onSubmit} postError={error} />;
 }
-
-const CreateReviewContainer = ({ onSubmit }) => (
-  <Formik
-    initialValues={initialValues}
-    onSubmit={onSubmit}
-    validationSchema={validationSchema}
-  >
-    {({ handleSubmit }) => <CreateReviewForm onSubmit={handleSubmit} />}
-  </Formik>
-);
 
 export default CreateReview;
